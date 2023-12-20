@@ -1,0 +1,27 @@
+snippet frontmatter
+alias fm
+  ---
+  title:  ${1:Title}
+  author:
+  - ${2:Author one}
+  keywords: [${3}]
+  abstract: |
+    ${4:Abstract}
+  ...
+
+  ${0}
+
+snippet li
+alias li
+  - ${0}
+
+snippet topic
+alias topic
+  # ${1:HEADING}
+    - ${2: First Item}
+    - ${0}
+
+snippet question
+alias question
+  what can be done with this?
+  

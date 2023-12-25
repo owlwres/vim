@@ -22,11 +22,15 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
+Plug 'ldelossa/litee.nvim'
+Plug 'ldelossa/litee-calltree.nvim'
 
 " TREESITTER
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
 
 " ORG MODE
 Plug 'nvim-orgmode/orgmode'
@@ -96,6 +100,9 @@ Plug 'ggandor/flit.nvim'
 Plug 'ggandor/leap-spooky.nvim'
 Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
 
+" SQLITE
+" 
+Plug 'kkharji/sqlite.lua',
 
 " TELESCOPE
 Plug 'nvim-lua/popup.nvim'
@@ -103,6 +110,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-bibtex.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+Plug 'nvim-telescope/telescope-frecency.nvim'
+Plug 'nvim-telescope/telescope-cheat.nvim'
 Plug 'axkirillov/easypick.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
 Plug 'AckslD/nvim-neoclip.lua'
@@ -111,11 +120,14 @@ Plug 'AckslD/nvim-neoclip.lua'
 " Plug 'renerocksai/telekasten.nvim'
 " Plug 'renerocksai/calendar-vim'
 
+" SESSION MANAGEMENT
+" Plug 'folke/persistence.nvim'
+Plug 'rmagatti/auto-session',
+
 " MISC
 Plug 'fmoralesc/vim-extended-autochdir'
 Plug 'windwp/nvim-autopairs'
 Plug 'MattesGroeger/vim-bookmarks'
-Plug 'folke/persistence.nvim'
 
 call plug#end()
 

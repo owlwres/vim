@@ -47,12 +47,14 @@ vim.keymap.set("n", "<leader>fj", function()
   })
 end)
 
+vim.keymap.set("n", "<leader>fw", "<Cmd>Telescope frecency<CR>")
+
 vim.cmd [[
 	nnoremap <Leader>bf <cmd>Telescope current_buffer_fuzzy_find<cr>
 	nnoremap <Leader>bs <cmd>Telescope buffers<cr>
 	nnoremap <Leader>of <cmd>Telescope oldfiles<cr>
 	nnoremap <Leader>nc <cmd>Telescope neoclip<cr>
-  nnoremap <Leader>sl <cmd>Telescope zoxide list<cr>
+  nnoremap <Leader>zl <cmd>Telescope zoxide list<cr>
   nnoremap <Leader>rj <cmd>Telescope bibtex<cr>
   nnoremap <Leader>ch <cmd>Telescope command_history<cr>
   nnoremap <Leader>er <cmd>Telescope registers<cr>
@@ -60,7 +62,13 @@ vim.cmd [[
   nnoremap <Leader>lr <cmd>Telescope lsp_references<cr>
   nnoremap <Leader>li <cmd>Telescope lsp_incoming_calls<cr>
   nnoremap <Leader>ls <cmd>Telescope lsp_document_symbols<cr>
+  nnoremap <Leader>re <cmd>Telescope resume<cr>
 ]]
+
+-- autosession
+vim.keymap.set("n", "<Leader>sl", require("auto-session.session-lens").search_session, {
+  noremap = true,
+})
 
 -- coq
 vim.cmd([[

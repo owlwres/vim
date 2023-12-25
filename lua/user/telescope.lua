@@ -5,6 +5,10 @@ require('telescope').setup {
         ["q"] = require('telescope.actions').close,
       }
     },
+    layout_config = {
+      height = 0.95,
+      width = .95
+    },
   },
 	extensions = {
 		fzf = {
@@ -36,8 +40,10 @@ require('telescope').setup {
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('bibtex')
 require('telescope').load_extension('fzf')
-require'telescope'.load_extension('zoxide')
+require('telescope').load_extension('zoxide')
 require('telescope').load_extension('neoclip')
+require("telescope").load_extension "frecency"
+require("telescope").load_extension("cheat")
 
 local z_utils = require("telescope._extensions.zoxide.utils")
 

@@ -8,12 +8,20 @@ set number
 set relativenumber
 set cursorline
 set virtualedit=all
+set shada=!,'1000,<50,s10,h
+
 inoremap jk <ESC>
 nnoremap <C-q> :qa!<CR>
-set conceallevel=2
-set concealcursor="nc"
-set formatoptions="jcql"
-" let g:netrw_liststyle= 3
+cmap <C-k> <up>
+cmap <C-j> <down>
+cmap <C-h> <S-left>
+cmap <C-l> <S-right>
+
+" set conceallevel=2
+" set concealcursor="nc"
+" set formatoptions="jcql"
+
+" let g:netrw_liststyle=3
 
 " REGISTERS
 nn <C-s> "*

@@ -33,9 +33,10 @@ return function(capabilities)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -45,8 +46,9 @@ return function(capabilities)
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', '<space>u', vim.lsp.buf.formatting, bufopts)
+    vim.keymap.set('n', '<space>co', vim.lsp.buf.outgoing_calls, bufopts)
+    vim.keymap.set('n', '<space>ci', vim.lsp.buf.incoming_calls, bufopts)
   end
 
   local lsp_flags = {
@@ -89,7 +91,10 @@ require'lspconfig'.lua_ls.setup {
             },
             completion = {
               callSnippet = "Replace"
-            }
+            },
+            diagnostics = {
+              disable = { "missing-fields" },
+            },
           }
 -- example to setup lua_ls and enable call snippets
         })
@@ -98,37 +103,6 @@ require'lspconfig'.lua_ls.setup {
       return true
   end
 }  
--- require'lspconfig'.lua_ls.setup {
-  --   capabilities = capabilities,
-  --   flags = lsp_flags,
-  --   on_attach = on_attach,
-  --   settings = {
-  --     Lua = {
-  --       runtime = {
-  --         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-  --         version = 'LuaJIT',
-  --       },
-  --       diagnostics = {
-  --         -- Get the language server to recognize the `vim` global
-  --         globals = {'vim'}
-  --       },
-  --       workspace = {
-  --         -- checkThirdParty = false,
-  --         -- library = {
-  --         --   vim.env.VIMRUNTIME
-  --         --   -- "${3rd}/luv/library"
-  --         --   -- "${3rd}/busted/library",
-  --         -- }
-  --         -- Make the server aware of Neovim runtime files
-  --         library = vim.api.nvim_get_runtime_file("", true),
-  --       },
-  --       -- Do not send telemetry data containing a randomized but unique identifier
-  --       telemetry = {
-  --         enable = false,
-  --       },
-  --     },
-  --   },
-  -- }
   require 'lspconfig'.dhall_lsp_server.setup {
     capabilities = capabilities,
     on_attach = on_attach,

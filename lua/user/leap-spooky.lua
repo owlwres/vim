@@ -1,7 +1,7 @@
 require('leap-spooky').setup {
   -- Additional text objects, to be merged with the default ones.
   -- E.g.: {'iq', 'aq'}
-  extra_text_objects = nil,
+  extra_text_objects = { 'ia', 'aa', 'iw', 'aw' },
   -- Mappings will be generated corresponding to all native text objects,
   -- like: (ir|ar|iR|aR|im|am|iM|aM){obj}.
   -- Special line objects will also be added, by repeating the affixes.

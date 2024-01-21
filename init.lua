@@ -1,6 +1,11 @@
-" GENERAL CONFIGURATION
+vim.cmd [[
 
-set ts=2 sw=2 
+" GENERAL CONFIGURATION
+let mapleader = ";"      
+let maplocalleader = ";"
+set cmdheight=0
+set runtimepath+=~/work/mod/a
+set ts=2 sw=2
 set expandtab
 set ignorecase
 set smartcase
@@ -9,6 +14,7 @@ set relativenumber
 set cursorline
 set virtualedit=all
 set shada=!,'1000,<50,s10,h
+set splitkeep=screen
 
 inoremap jk <ESC>
 nnoremap <C-q> :qa!<CR>
@@ -35,22 +41,12 @@ tnoremap <C-w>k <C-\><C-N><C-w>k
 tnoremap <C-w>l <C-\><C-N><C-w>l
 tnoremap <C-w>N <C-\><C-N>
 
-" COMPLETION 
+" COMPLETION
 
-set completeopt=menu,menuone,noselect 
+set completeopt=menu,menuone,noselect
 
-" MODULES
+]]
 
-lua << EOF
-
-local config_file = vim.call('eval', '$MYVIMRC')
-local config_directory = vim.fs.dirname(config_file)
-
-vim.cmd.source(config_directory .. '/lightline.vim')
-vim.cmd.source(config_directory .. '/plug.vim')
-
-require('plugins')
+require('plugin')
 require('autocommands')
 require('keymappings')
-                
-EOF

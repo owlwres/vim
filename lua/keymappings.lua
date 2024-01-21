@@ -1,9 +1,6 @@
 -- leadghr
 local keymap = vim.api.nvim_set_keymap
-local jpts = { noremap = true, silent = true }
--- keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = ";"
-vim.g.maplocalleader = ";"
+local mapopts = { noremap = true, silent = true }
 
 -- netrw integration
 
@@ -47,10 +44,9 @@ vim.keymap.set("n", "<leader>fj", function()
   })
 end)
 
-vim.keymap.set("n", "<leader>fw", "<Cmd>Telescope frecency<CR>")
 
 vim.cmd [[
-	nnoremap <Leader>bf <cmd>Telescope current_buffer_fuzzy_find<cr>
+	nnoremap <c-f> <cmd>Telescope current_buffer_fuzzy_find<cr>
 	nnoremap <Leader>bs <cmd>Telescope buffers<cr>
 	nnoremap <Leader>of <cmd>Telescope oldfiles<cr>
 	nnoremap <Leader>nc <cmd>Telescope neoclip<cr>
@@ -63,12 +59,10 @@ vim.cmd [[
   nnoremap <Leader>li <cmd>Telescope lsp_incoming_calls<cr>
   nnoremap <Leader>ls <cmd>Telescope lsp_document_symbols<cr>
   nnoremap <Leader>re <cmd>Telescope resume<cr>
+  nnoremap <Leader>he <cmd>Telescope cheat fd<cr>
+  nnoremap <Leader>ma <cmd>Telescope macros<cr>
 ]]
 
--- autosession
-vim.keymap.set("n", "<Leader>sl", require("auto-session.session-lens").search_session, {
-  noremap = true,
-})
 
 -- coq
 vim.cmd([[
@@ -90,7 +84,7 @@ vim.cmd [[
 -- easypick
   --
 vim.cmd [[
-   nnoremap <Leader>sd <cmd>lcd %:p:h<cr><cmd>Easypick foldersbelow<cr>
+   nnoremap <leader>sd <cmd>cd %:p:h<cr><cmd>Easypick foldersbelow<cr>
    nnoremap <Leader>cf <cmd>Easypick changed_files<cr>
    nnoremap <Leader>cn <cmd>Easypick conflicts<cr>
 ]]
@@ -111,14 +105,23 @@ vim.cmd [[
 ]]
 
 -- sessions
+-- :SessionToggle - Determines whether to load, start or stop a session
+-- :SessionStart - Start recording a session. Useful if autosave = false
+-- :SessionStop - Stop recording a session
+-- :SessionSave - Save the current session
+-- :SessionLoad - Load the session for the current directory and current branch (if git_use_branch = true)
+-- :SessionLoadLast - Load the most recent session
+-- :SessionLoadFromFile - Load a session from a given path
+-- :SessionDelete - Delete the current session
+vim.api.nvim_set_keymap('n', '<leader>sl', '<cmd>SessionLoadLast<cr>', mapopts)
+vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>SessionStart<cr>', mapopts)
+vim.api.nvim_set_keymap('n', '<leader>su', '<cmd>SessionSave<cr>', mapopts)
+vim.api.nvim_set_keymap('n', '<leader>st', '<cmd>SessionStop<cr>', mapopts)
+-- vim.api.nvim_set_keymap('n', '<leader>su', '<cmd>SessionSave<cr>', jqpts)
+-- vim.api.nvim_set_keymap('n', '<leader>qs', '<cmd>SessionStart<cr>', jqpts)
+-- vim.api.nvim_set_keymap('n', '<leader>qr', '<cmd>Telescope persisted<cr>', jqpts)
 -- restore the session for the current directory
-vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {})
-
--- restore the last session
-vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {})
-
--- stop Persistence => session won't be saved on exit
-vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], {})
+-- autosession
 
 
 -- refactoring
@@ -156,23 +159,32 @@ vim.cmd [[
     nnoremap <Leader>W <Plug>(DBUI_SaveQuery)
 ]]
 
--- Telekasten
 
--- Launch panel if nothing is typed after <leader>z
-vim.keymap.set("n", "<leader>z", "<cmd>Telekasten panel<CR>")
+-- Tabs
+--
+vim.api.nvim_set_keymap("n", "<c-t>h", "<cmd>tabp<cr>", mapopts);
+vim.api.nvim_set_keymap("n", "<c-t>l", "<cmd>tabn<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "<c-t>k", "<cmd>tabcl<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "<c-t>n", "<cmd>tabnew<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "<c-t>H", "<cmd>tabmove -1<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "<c-t>L", "<cmd>tabmove +1<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "<c-t>o", "<cmd>tabonly<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "<tab><space>", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "<space><space>", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "<space><tab>", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "<space>1", "1gt", mapopts)
+vim.api.nvim_set_keymap("n", "<space>2", "2gt", mapopts)
+vim.api.nvim_set_keymap("n", "<space>3", "3gt", mapopts)
+vim.api.nvim_set_keymap("n", "<space>4", "4gt", mapopts)
+vim.api.nvim_set_keymap("n", "<space>5", "5gt", mapopts)
+vim.api.nvim_set_keymap("n", "<space>6", "6gt", mapopts)
+vim.api.nvim_set_keymap("n", "<space>7", "7gt", mapopts)
+vim.api.nvim_set_keymap("n", "<space>8", "8gt", mapopts)
 
--- Most used functions
-vim.keymap.set("n", "<leader>kf", "<cmd>Telekasten find_notes<CR>")
-vim.keymap.set("n", "<leader>kj", "<cmd>Telekasten search_notes<CR>")
-vim.keymap.set("n", "<leader>kd", "<cmd>Telekasten goto_today<CR>")
-vim.keymap.set("n", "<leader>kw", "<cmd>Telekasten goto_thisweek<CR>")
-vim.keymap.set("n", "<leader>kz", "<cmd>Telekasten follow_link<CR>")
-vim.keymap.set("n", "<leader>kn", "<cmd>Telekasten new_note<CR>")
--- vim.keymap.set("n", "<leader>zc", "<cmd>Telekasten show_calendar<CR>")
-vim.keymap.set("n", "<leader>kc", "<cmd>Calendar<CR>")
-vim.keymap.set("n", "<leader>kb", "<cmd>Telekasten show_backlinks<CR>")
-vim.keymap.set("n", "<leader>kI", "<cmd>Telekasten insert_img_link<CR>")
+ -- Macro
+ vim.keymap.set('v', 'Q', ':norm Q<cr>')
 
--- Call insert link automatically when we start typing a link
-vim.keymap.set("i", "[[", "<cmd>Telekasten insert_link<CR>")
-
+-- LUA DEVELOPMENT
+--
+vim.api.nvim_set_keymap("n", "<leader>R", "<cmd>Luadev<cr>", mapopts)
+vim.keymap.set({'n', 'v'}, '<leader>r', '<Plug>(Luadev-Run)')

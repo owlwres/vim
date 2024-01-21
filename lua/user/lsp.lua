@@ -113,10 +113,10 @@ require'lspconfig'.lua_ls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
   }
-  require 'lspconfig'.jsonls.setup {
-    capabilities = capabilities,
-    cmd = { "vscode-json-languageserver", "--stdio" }
-  }
+  -- require 'lspconfig'.jsonls.setup {
+  --   capabilities = capabilities,
+  --   cmd = { "vscode-json-languageserver", "--stdio" }
+  -- }
   require('lspconfig').yamlls.setup {
     capabilities = capabilities,
     on_attach = on_attach,

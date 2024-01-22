@@ -14,10 +14,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 
+
   -- LIGHTLINE
   -- 'itchyny/lightline.vim',
   -- { 'tsuyoshicho/StatuslineUpdateTimer.vim', commit ='08b1560bd3578492404adcd7bb8cbcb004b5c9c9'},
-
 
   -- THEME
   {
@@ -61,6 +61,12 @@ require('lazy').setup({
   -- ERGONOMICS
   'fedepujol/move.nvim',
   {
+    'windwp/nvim-autopairs',
+    config = function()
+      require 'user.autopairs'
+    end
+  },
+  {
     'gaoDean/autolist.nvim',
     config = function()
       require 'user.autolist'
@@ -98,28 +104,34 @@ require('lazy').setup({
 
   -- TREESITTER
   {
-    'nvim-treesitter/nvim-treesitter',
+    'nvim-treesitter/nvim-treesitter-textobjects',
     config = function()
-      require 'user.treesitter'
+      require 'user.treesitter-textobjects'
     end,
     dependencies = {
-      'nvim-treesitter/playground',
+      {
+        'nvim-treesitter/nvim-treesitter',
+        config = function()
+          require 'user.treesitter'
+        end,
+      },
     }
   },
-
   {
     'nvim-treesitter/nvim-treesitter-context',
     config = function()
       require 'user.treesitter-context'
-    end
+    end,
+    dependencies = {
+      {
+        'nvim-treesitter/nvim-treesitter',
+        config = function()
+          require 'user.treesitter'
+        end,
+      },
+    }
   },
 
-  {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    config = function()
-      require 'user.treesitter-textobjects'
-    end
-  },
 
   -- ORG MODE
   {
@@ -149,30 +161,38 @@ require('lazy').setup({
   -- Plug 'puremourning/vimspector'
   {
     'mfussenegger/nvim-dap',
+    lazy = true,
     config = function()
       require 'user.dap'
-    end
+    end,
+    dependencies = {
+      {
+        'rcarriga/nvim-dap-ui',
+        config = function()
+          require 'user.dap-ui'
+        end
+      },
+      'jbyuki/one-small-step-for-vimkind',
+    }
   },
-  {
-    'rcarriga/nvim-dap-ui',
-    config = function()
-      require 'user.dap-ui'
-    end
-  },
-  'jbyuki/one-small-step-for-vimkind',
-
-  -- SNIPPETS
-  -- follow latest release and install jsregexp.
-  -- 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release),
-  -- 'benfowler/telescope-luasnip.nvim',
 
   -- MACRO
   -- 'ecthelionvi/NeoComposer.nvim',
   {
     "chrisgrieser/nvim-recorder",
-    dependencies = "rcarriga/nvim-notify", -- optional
-    opts = {},                          -- required even with default settings, since it calls `setup()`
+    config = function()
+      require 'user.recorder'
+    end
   },
+
+  -- SNIPPETS
+  -- follow latest release and install jsregexp.
+  {
+    'L3MON4D3/LuaSnip',
+    version = 'v2.*',
+    build = 'make install_jsregexp'
+  },
+
 
   -- TEX
   -- vim.g.tex_flavor='latex'
@@ -207,19 +227,19 @@ require('lazy').setup({
   -- 'phaazon/hop.nvim'
   -- 'folke/flash.nvim',
   {
-    'ggandor/leap.nvim',
-    lazy = false,
-    config = function()
-      require 'user.leap'
-    end
-  },
-
-  {
     'ggandor/leap-spooky.nvim',
     lazy = false,
     config = function()
       require 'user.leap-spooky'
-    end
+    end,
+    dependencies = {
+      {
+        'ggandor/leap.nvim',
+        config = function()
+          require 'user.leap'
+        end
+      },
+    }
   },
 
   {
@@ -227,9 +247,19 @@ require('lazy').setup({
     lazy = false,
     config = function()
       require 'user.flit'
-    end
+    end,
+    dependencies = {
+      {
+        'ggandor/leap.nvim',
+        config = function()
+          require 'user.leap'
+        end
+      },
+    }
   },
-  { 'ThePrimeagen/harpoon', branch = 'harpoon2' },
+
+
+  -- { 'ThePrimeagen/harpoon', branch = 'harpoon2' },
 
 
   -- TEXT OBJECTS
@@ -246,11 +276,13 @@ require('lazy').setup({
     end
   },
 
+  -- TASK: marks
   -- TELESCOPE
   {
     'nvim-telescope/telescope.nvim',
     lazy = false,
     config = function()
+      require('user.telescope')
     end,
     dependencies = {
       'nvim-lua/popup.nvim',
@@ -270,20 +302,20 @@ require('lazy').setup({
     }
   },
 
-
-
   -- SESSION MANAGEMENT
   -- 'folke/persistence.nvim',
-  -- 'rmagatti/auto-session',,
+  -- 'rmagatti/auto-session',
   {
     'olimorris/persisted.nvim',
     config = function()
       require 'user.persisted'
     end
   },
-
-
+  -- NOTIFICATIONS
+  {
+    'rcarriga/nvim-notify',
+    config = function() require 'user.notify' end
+  },
   -- MISC
   'fmoralesc/vim-extended-autochdir',
-  'windwp/nvim-autopairs'
 })

@@ -1,8 +1,8 @@
 vim.cmd [[
 
 " GENERAL CONFIGURATION
-let mapleader = ";"      
-let maplocalleader = ";"
+let g:mapleader = ";"      
+let g:maplocalleader = ";"
 set cmdheight=0
 set runtimepath+=~/work/mod/a
 set ts=2 sw=2
@@ -23,7 +23,7 @@ cmap <C-j> <down>
 cmap <C-h> <S-left>
 cmap <C-l> <S-right>
 
-" set conceallevel=2
+set conceallevel=2
 " set concealcursor="nc"
 " set formatoptions="jcql"
 

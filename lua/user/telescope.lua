@@ -3,10 +3,16 @@ require('telescope').setup {
     mappings = {
       n = {
         ["q"] = require('telescope.actions').close,
+        ["<c-c>"] = require('telescope.actions').close,
+        ["<c-o>"] = require('telescope.actions').select_default,
+        ["<c-t>"] = require('telescope.actions').select_tab,
         ["<c-j>"] = require('telescope.actions').results_scrolling_down,
         ["<c-k>"] = require('telescope.actions').results_scrolling_up,
       },
       i = {
+        ["<c-c>"] = require('telescope.actions').close,
+        ["<c-o>"] = require('telescope.actions').select_default,
+        ["<c-t>"] = require('telescope.actions').select_tab,
         ["<c-j>"] = require('telescope.actions').results_scrolling_down,
         ["<c-k>"] = require('telescope.actions').results_scrolling_up,
       }
@@ -57,7 +63,6 @@ require('telescope').load_extension('neoclip')
 require("telescope").load_extension("cheat")
 require("telescope").load_extension("persisted")
 require("telescope").load_extension("ui-select")
-require('telescope').load_extension('macros')
 
 local z_utils = require("telescope._extensions.zoxide.utils")
 

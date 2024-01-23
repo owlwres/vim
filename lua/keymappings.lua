@@ -182,9 +182,12 @@ vim.api.nvim_set_keymap("n", "<space>7", "7gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>8", "8gt", mapopts)
 
  -- Macro
- vim.keymap.set('v', 'Q', ':norm Q<cr>')
+vim.keymap.set('v', 'Q', ':norm Q<cr>', mapopts)
 
 -- LUA DEVELOPMENT
 --
 vim.api.nvim_set_keymap("n", "<leader>R", "<cmd>Luadev<cr>", mapopts)
-vim.keymap.set({'n', 'v'}, '<leader>r', '<Plug>(Luadev-Run)')
+vim.keymap.set({'n', 'v'}, '<leader>r', '<Plug>(Luadev-Run)', mapopts)
+
+-- NOTIFICATIONS
+vim.keymap.set({'n', 'v' }, '<space>ji', function() require('notify').dismiss() end, mapopts)

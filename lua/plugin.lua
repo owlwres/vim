@@ -30,7 +30,54 @@ require('lazy').setup({
   },
 
   -- LUALINE
-  'nvim-lualine/lualine.nvim',
+  -- {
+  --   'nvim-lualine/lualine.nvim',
+  --   config = function() require 'user.lualine' end
+  -- },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "meuter/lualine-so-fancy.nvim",
+    },
+    opts = {
+      options = {
+        -- theme = require('github-nvim-theme.lualine.themes.github_dark_dimmed'),
+        component_separators = { left = "│", right = "│" },
+        section_separators = { left = "", right = "" },
+        globalstatus = true,
+        refresh = {
+          statusline = 100,
+        },
+      },
+      sections = {
+        lualine_a = {
+          { "fancy_mode", width = 3 }
+        },
+        lualine_b = {
+          { "fancy_branch" },
+          { "fancy_diff" },
+        },
+        lualine_c = {
+          { "fancy_cwd", substitute_home = true }
+        },
+        lualine_x = {
+          { "fancy_macro" },
+          { "fancy_diagnostics" },
+          { "fancy_searchcount" },
+          { "fancy_location" },
+        },
+        lualine_y = {
+          { "fancy_filetype", ts_icon = "" },
+          { "fancy_lsp_servers" },
+        },
+        lualine_z = {
+          { "time" },
+          { "space" }
+        },
+      }
+    },
+  },
 
   -- TPOPE
   'tpope/vim-eunuch',
@@ -98,9 +145,10 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     config = function()
       require 'user.lsp' ({})
-    end
+    end,
+    dependencies = { 'hinell/lsp-timeout.nvim' },
   },
-  'hinell/lsp-timeout.nvim',
+
 
   -- TREESITTER
   {
@@ -119,6 +167,7 @@ require('lazy').setup({
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
+    lazy = false,
     config = function()
       require 'user.treesitter-context'
     end,
@@ -160,20 +209,23 @@ require('lazy').setup({
   -- DEBUGGING
   -- Plug 'puremourning/vimspector'
   {
-    'mfussenegger/nvim-dap',
+    'rcarriga/nvim-dap-ui',
     lazy = true,
     config = function()
-      require 'user.dap'
+      require 'user.dap-ui'
     end,
     dependencies = {
       {
-        'rcarriga/nvim-dap-ui',
+        'mfussenegger/nvim-dap',
         config = function()
-          require 'user.dap-ui'
-        end
+          require 'user.dap'
+        end,
       },
-      'jbyuki/one-small-step-for-vimkind',
     }
+  },
+  {
+    'jbyuki/one-small-step-for-vimkind',
+    lazy = true
   },
 
   -- MACRO
@@ -316,6 +368,16 @@ require('lazy').setup({
     'rcarriga/nvim-notify',
     config = function() require 'user.notify' end
   },
+  {
+    'folke/noice.nvim',
+    event = "VeryLazy",
+    config = function() require 'user.noice' end,
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    }
+  },
+
   -- MISC
   'fmoralesc/vim-extended-autochdir',
 })

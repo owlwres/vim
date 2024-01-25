@@ -34,7 +34,7 @@ vim.keymap.set("n", "<leader>ff", function()
   builtin.find_files({
     cwd = utils.buffer_dir()
   })
-end)
+end, mapopts)
 
 vim.keymap.set("n", "<leader>fj", function()
   local builtin = require('telescope.builtin')
@@ -42,12 +42,17 @@ vim.keymap.set("n", "<leader>fj", function()
   builtin.live_grep({
     cwd = utils.buffer_dir()
   })
-end)
+end, mapopts)
+
+vim.keymap.set({ 'n', 'v' }, '<leader>la', function()
+  require("telescope").extensions.aerial.aerial()
+end, mapopts)
 
 
 vim.cmd [[
 	nnoremap <c-f> <cmd>Telescope current_buffer_fuzzy_find<cr>
 	nnoremap <Leader>bs <cmd>Telescope buffers<cr>
+	nnoremap <Leader>js <cmd>Telescope jumplist<cr>
 	nnoremap <Leader>of <cmd>Telescope oldfiles<cr>
 	nnoremap <Leader>nc <cmd>Telescope neoclip<cr>
   nnoremap <Leader>zl <cmd>Telescope zoxide list<cr>
@@ -61,6 +66,7 @@ vim.cmd [[
   nnoremap <Leader>re <cmd>Telescope resume<cr>
   nnoremap <Leader>he <cmd>Telescope cheat fd<cr>
   nnoremap <Leader>ma <cmd>Telescope macros<cr>
+  nnoremap <Leader>jt <cmd>Telescope notify<cr>
 ]]
 
 
@@ -82,7 +88,7 @@ vim.cmd [[
 ]]
 
 -- easypick
-  --
+--
 vim.cmd [[
    nnoremap <leader>sd <cmd>cd %:p:h<cr><cmd>Easypick foldersbelow<cr>
    nnoremap <Leader>cf <cmd>Easypick changed_files<cr>
@@ -113,6 +119,7 @@ vim.cmd [[
 -- :SessionLoadLast - Load the most recent session
 -- :SessionLoadFromFile - Load a session from a given path
 -- :SessionDelete - Delete the current session
+-- local otheropts = {silent = true, noremap = true, desc = "?1"}
 vim.api.nvim_set_keymap('n', '<leader>sl', '<cmd>SessionLoadLast<cr>', mapopts)
 vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>SessionStart<cr>', mapopts)
 vim.api.nvim_set_keymap('n', '<leader>su', '<cmd>SessionSave<cr>', mapopts)
@@ -162,16 +169,15 @@ vim.cmd [[
 
 -- Tabs
 --
-vim.api.nvim_set_keymap("n", "<c-t>h", "<cmd>tabp<cr>", mapopts);
-vim.api.nvim_set_keymap("n", "<c-t>l", "<cmd>tabn<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "<c-t>k", "<cmd>tabcl<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "<c-t>n", "<cmd>tabnew<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "<c-t>H", "<cmd>tabmove -1<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "<c-t>L", "<cmd>tabmove +1<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "<c-t>o", "<cmd>tabonly<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "<tab><space>", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "§h", "<cmd>tabp<cr>", mapopts);
+vim.api.nvim_set_keymap("n", "§l", "<cmd>tabn<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§k", "<cmd>tabcl<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§n", "<cmd>tabnew<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§H", "<cmd>tabmove -1<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§L", "<cmd>tabmove +1<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§o", "<cmd>tabonly<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§<space>", "g<tab>", mapopts)
 vim.api.nvim_set_keymap("n", "<space><space>", "g<tab>", mapopts)
-vim.api.nvim_set_keymap("n", "<space><tab>", "g<tab>", mapopts)
 vim.api.nvim_set_keymap("n", "<space>1", "1gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>2", "2gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>3", "3gt", mapopts)
@@ -181,13 +187,15 @@ vim.api.nvim_set_keymap("n", "<space>6", "6gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>7", "7gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>8", "8gt", mapopts)
 
- -- Macro
+-- Macro
 vim.keymap.set('v', 'Q', ':norm Q<cr>', mapopts)
 
 -- LUA DEVELOPMENT
 --
 vim.api.nvim_set_keymap("n", "<leader>R", "<cmd>Luadev<cr>", mapopts)
-vim.keymap.set({'n', 'v'}, '<leader>r', '<Plug>(Luadev-Run)', mapopts)
+vim.keymap.set({ 'n', 'v' }, '<leader>r', '<Plug>(Luadev-Run)', mapopts)
 
 -- NOTIFICATIONS
-vim.keymap.set({'n', 'v' }, '<space>ji', function() require('notify').dismiss() end, mapopts)
+vim.keymap.set({ 'n', 'v' }, '<space>ji', function() require('notify').dismiss() end, mapopts)
+
+-- AERIAL

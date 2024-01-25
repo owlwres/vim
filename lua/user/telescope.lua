@@ -23,31 +23,39 @@ require('telescope').setup {
     },
   },
   extensions = {
+    aerial = {
+      -- Display symbols as <root>.<parent>.<symbol>
+      show_nesting = {
+        ["_"] = true, -- This key will be the default
+        -- json = true,   -- You can set the option for specific filetypes
+        -- yaml = true,
+      },
+    },
     ["ui-select"] = {
       require("telescope.themes").get_dropdown {
         -- even more opts
       },
       fzf = {
-        fuzzy = true,              -- false will only do exact matching
+        fuzzy = true,                   -- false will only do exact matching
         override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true, -- override the file sorter
-        case_mode = "smart_case",  -- or "ignore_case" or "respect_case"
+        override_file_sorter = true,    -- override the file sorter
+        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
       }
     },
-    pickers = {
-      buffers = {
-        mappings = {
-          n = {
-            ["D"] = require('telescope.actions').delete_buffer,
-            ["<C-a>"] = require('telescope.actions').toggle_all
-          }
+  },
+  pickers = {
+    buffers = {
+      mappings = {
+        n = {
+          ["D"] = require('telescope.actions').delete_buffer,
+          ["<C-a>"] = require('telescope.actions').toggle_all
         }
-      },
-      registers = {
-        mappings = {
-          n = {
-            ["<CR>"] = require('telescope.actions').paste_register,
-          }
+      }
+    },
+    registers = {
+      mappings = {
+        n = {
+          ["<CR>"] = require('telescope.actions').paste_register,
         }
       }
     }
@@ -63,6 +71,8 @@ require('telescope').load_extension('neoclip')
 require("telescope").load_extension("cheat")
 require("telescope").load_extension("persisted")
 require("telescope").load_extension("ui-select")
+require("telescope").load_extension("aerial")
+require("telescope").load_extension("notify")
 
 local z_utils = require("telescope._extensions.zoxide.utils")
 
@@ -82,5 +92,3 @@ require("telescope._extensions.zoxide.config").setup({
     },
   }
 })
--- load refactoring Telescope extension
--- require("telescope").load_extension("refactoring")

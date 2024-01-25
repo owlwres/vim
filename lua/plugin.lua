@@ -82,7 +82,7 @@ require('lazy').setup({
   -- TPOPE
   'tpope/vim-eunuch',
   'tpope/vim-sensible',
-  'tpope/vim-surround',
+  -- 'tpope/vim-surround',
   'tpope/vim-fugitive',
   'tpope/vim-vinegar',
   'tpope/vim-commentary',
@@ -108,39 +108,82 @@ require('lazy').setup({
   -- ERGONOMICS
   'fedepujol/move.nvim',
   {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+  {
+    'nvim-focus/focus.nvim',
+    config = function()
+      require 'user.focus'
+    end,
+    version = false
+  },
+  {
     'windwp/nvim-autopairs',
     config = function()
       require 'user.autopairs'
     end
   },
   {
-    'gaoDean/autolist.nvim',
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
     config = function()
-      require 'user.autolist'
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
     end
   },
+  -- {
+  --   'gaoDean/autolist.nvim',
+  --   config = function()
+  --     require 'user.autolist'
+  --   end
+  -- },
 
 
   -- PRIVACY
   -- 'laytan/cloak.nvim',
 
   -- BUFFERS MANAGEMENT
-  -- Plug 'axkirillov/hbac.nvim'
-  -- lua << EOF
-  --  require("hbac").setup({
-  --   autoclose     = true, -- set autoclose to false if you want to close manually
-  --   threshold     = 10, -- hbac will start closing unedited buffers once that number is reached
-  --   close_command = function(bufnr)
-  --     vim.api.nvim_buf_delete(bufnr, {})
-
-  --   close_buffers_with_windows = false, -- hbac will close buffers with associated windows if this option is `true`
-  --   telescope = {
-  --     -- See #telescope-configuration below
-  --     },
-  -- })
-  -- EOF
+  { 'axkirillov/hbac.nvim',
+    config = function()
+     require("hbac").setup({
+      autoclose     = true, -- set autoclose to false if you want to close manually
+      threshold     = 10, -- hbac will start closing unedited buffers once that number is reached
+      close_command = function(bufnr)
+        vim.api.nvim_buf_delete(bufnr, {})
+      end,
+      close_buffers_with_windows = false, -- hbac will close buffers with associated windows if this option is `true`
+      telescope = {
+        -- See #telescope-configuration below
+        },
+      })
+    end
+  },
 
   -- LSP
+  {
+    'stevearc/aerial.nvim',
+    config = function()
+      require 'user.aerial'
+    end,
+    opts = {},
+    -- Optional dependencies
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
+  },
   {
     'neovim/nvim-lspconfig',
     config = function()
@@ -364,17 +407,20 @@ require('lazy').setup({
     end
   },
   -- NOTIFICATIONS
-  {
-    'rcarriga/nvim-notify',
-    config = function() require 'user.notify' end
-  },
+  -- {
+  --   'rcarriga/nvim-notify',
+  --   config = function() require 'user.notify' end
+  -- },
   {
     'folke/noice.nvim',
     event = "VeryLazy",
     config = function() require 'user.noice' end,
     dependencies = {
       'MunifTanjim/nui.nvim',
-      'rcarriga/nvim-notify',
+      {
+        'rcarriga/nvim-notify',
+        config = function() require 'user.notify' end
+      },
     }
   },
 

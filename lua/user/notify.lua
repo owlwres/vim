@@ -8,7 +8,7 @@ require("notify").setup({
     TRACE = "✎",
     WARN = ""
   },
-  level = 3,
+  level = 2,
   minimum_width = 50,
   render = "default",
   stages = "fade",
@@ -20,3 +20,4 @@ require("notify").setup({
   top_down = true
 })
 vim.notify = require("notify")
+

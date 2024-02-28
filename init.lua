@@ -57,3 +57,4 @@ tnoremap <C-w>l <C-\><C-N><C-w>l
 require('plugin')
 require('autocommands')
 require('keymappings')
+require('util')

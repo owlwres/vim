@@ -1,36 +1,36 @@
-return function(capabilities)
-  local capabilities_configuration  = { capabilities }
-  local coq = require('coq')
-  capabilities = coq.lsp_ensure_capabilities(capabilities_configuration).capabilities
-  -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
-  -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+return function()
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  -- local capabilities_configuration  = { capabilities }
+  -- local coq = require('coq')
+  -- capabilities = coq.lsp_ensure_capabilities(capabilities_configuration).capabilities
+  -- capabilities.textdocument.completion.completionitem.snippetsupport = true
   -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-  -- Setup lspconfig.
-  -- Mappings.
-  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    -- if client.server_capabilities.signatureHelpProvider then
-    --   require('lsp-overloads').setup(client, {})
-    -- if client.server_capabilities.signatureHelpProvider then
-    --   require('lsp-overloads').setup(client, {})
+  -- setup lspconfig.
+  -- mappings.
+  -- see `:help vim.diagnostic.*` for documentation on any of the below functions
+  -- if client.server_capabilities.signaturehelpprovider then
+  --   require('lsp-overloads').setup(client, {})
+  -- if client.server_capabilities.signaturehelpprovider then
+  --   require('lsp-overloads').setup(client, {})
   local opts = { noremap = true, silent = true }
   vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
   vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-  -- Use an on_attach function to only map the following keys
+  -- use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
   local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
+    -- enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    --- Guard against servers without the signatureHelper capability
-    -- if client.server_capabilities.signatureHelpProvider then
+    --- guard against servers without the signaturehelper capability
+    -- if client.server_capabilities.signaturehelpprovider then
     --   require('lsp-overloads').setup(client, {})
     -- end
 
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    -- mappings.
+    -- see `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
@@ -63,14 +63,14 @@ return function(capabilities)
     -- why is this here?
     flags = lsp_flags,
   }
-require'lspconfig'.lua_ls.setup {
+  require 'lspconfig'.lua_ls.setup {
     capabilities = capabilities,
     -- why is this here?
     flags = lsp_flags,
     on_attach = on_attach,
     on_init = function(client)
       local path = client.workspace_folders[1].name
-      if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+      if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
         client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
           Lua = {
             runtime = {
@@ -94,15 +94,18 @@ require'lspconfig'.lua_ls.setup {
             },
             diagnostics = {
               disable = { "missing-fields" },
+              globals = {
+                'vim'
+              }
             },
           }
--- example to setup lua_ls and enable call snippets
+          -- example to setup lua_ls and enable call snippets
         })
         client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
       end
       return true
-  end
-}  
+    end
+  }
   require 'lspconfig'.dhall_lsp_server.setup {
     capabilities = capabilities,
     on_attach = on_attach,
@@ -134,12 +137,22 @@ require'lspconfig'.lua_ls.setup {
     filetypes = { "sh", "zsh" }
   }
   -- require 'lspconfig'.vimls.setup {}
-  require'lspconfig'.pylsp.setup{
+  -- require 'lspconfig'.pylsp.setup {
+  --   capabilities = capabilities,
+  --   flags = lsp_flags,
+  --   on_attach = on_attach
+  -- }
+  require 'lspconfig'.pyright.setup {
     capabilities = capabilities,
     flags = lsp_flags,
     on_attach = on_attach
   }
-  require'lspconfig'.rust_analyzer.setup{
+  -- require'lspconfig'.pylyzer.setup{
+  --   capabilities = capabilities,
+  --   flags = lsp_flags,
+  --   on_attach = on_attach
+  -- }
+  require 'lspconfig'.rust_analyzer.setup {
     capabilities = capabilities,
     flags = lsp_flags,
     on_attach = on_attach,
@@ -148,29 +161,29 @@ require'lspconfig'.lua_ls.setup {
         lens = {
           references = {
             trait = {
-             enable = true
+              enable = true
             },
             method = {
-             enable = true
+              enable = true
             },
             enumVariant = {
-             enable = true
+              enable = true
             },
             adt = {
-             enable = true
+              enable = true
             },
           }
         },
         hover = {
           actions = {
             references = {
-             enable = true
+              enable = true
             }
           }
         },
         diagnostics = {
           experimental = {
-           enable = true
+            enable = true
           }
         },
         completion = {
@@ -182,10 +195,83 @@ require'lspconfig'.lua_ls.setup {
       }
     }
   }
-  require'lspconfig'.gopls.setup{}
-  require'lspconfig'.elixirls.setup{
-    -- Unix
-    cmd = { "/path/to/elixir-ls/language_server.sh" };
+  require 'lspconfig'.gopls.setup {
+    capabilities = capabilities,
+    flags = lsp_flags,
+    on_attach = on_attach
+  }
+  require 'lspconfig'.elixirls.setup {
+    capabilities = capabilities,
+    flags = lsp_flags,
+    on_attach = on_attach,
+    -- unix
+    cmd = { "/path/to/elixir-ls/language_server.sh" },
+  }
+  require 'lspconfig'.fennel_ls.setup {
+    on_init = function(client)
+      local config = {
+        settings = {
+          ["fennel-ls"] = {
+            ["extra-globals"] = 'vim'
+          }
+        }
+      }
+      client.notify("workspace/didchangeconfiguration", config)
+      return true
+    end,
+    capabilities = capabilities,
+    flags = lsp_flags,
+    on_attach = on_attach,
+    cmd = { '/users/alex/work/fennel-ls/fennel-ls' },
+  }
+  -- require 'lspconfig'.vale_ls.setup {
+  --   capabilities = capabilities,
+  --   flags = lsp_flags,
+  --   on_attach = on_attach,
+  -- }
+  require 'lspconfig'.omnisharp.setup {
+    -- cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
+    cmd = { "dotnet", "/Users/alex/Work/omnisharp-roslyn-build/Omnisharp.dll" },
+    capabilities = capabilities,
+    flags = lsp_flags,
+    on_attach = on_attach,
+    handlers = {
+      ["textDocument/definition"] = require('omnisharp_extended').handler,
+    },
+
+    -- Enables support for reading code style, naming convention and analyzer
+    -- settings from .editorconfig.
+    enable_editorconfig_support = true,
+
+    -- If true, MSBuild project system will only load projects for files that
+    -- were opened in the editor. This setting is useful for big C# codebases
+    -- and allows for faster initialization of code navigation features only
+    -- for projects that are relevant to code that is being edited. With this
+    -- setting enabled OmniSharp may load fewer projects and may thus display
+    -- incomplete reference lists for symbols.
+    enable_ms_build_load_projects_on_demand = false,
+
+    -- Enables support for roslyn analyzers, code fixes and rulesets.
+    enable_roslyn_analyzers = false,
+
+    -- Specifies whether 'using' directives should be grouped and sorted during
+    -- document formatting.
+    organize_imports_on_format = false,
+
+    -- Enables support for showing unimported types and unimported extension
+    -- methods in completion lists. When committed, the appropriate using
+    -- directive will be added at the top of the current file. This option can
+    -- have a negative impact on initial completion responsiveness,
+    -- particularly for the first few completion sessions after opening a
+    -- solution.
+    enable_import_completion = false,
+
+    -- Specifies whether to include preview versions of the .NET SDK when
+    -- determining which version to use for project loading.
+    sdk_include_prereleases = true,
+
+    -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+    -- true
+    analyze_open_documents_only = false,
   }
 end
-

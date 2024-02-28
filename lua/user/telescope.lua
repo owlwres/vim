@@ -8,6 +8,8 @@ require('telescope').setup {
         ["<c-t>"] = require('telescope.actions').select_tab,
         ["<c-j>"] = require('telescope.actions').results_scrolling_down,
         ["<c-k>"] = require('telescope.actions').results_scrolling_up,
+        ["<c-h>"] = require('telescope.actions').preview_scrolling_left,
+        ["<c-l>"] = require('telescope.actions').preview_scrolling_right,
       },
       i = {
         ["<c-c>"] = require('telescope.actions').close,
@@ -15,6 +17,9 @@ require('telescope').setup {
         ["<c-t>"] = require('telescope.actions').select_tab,
         ["<c-j>"] = require('telescope.actions').results_scrolling_down,
         ["<c-k>"] = require('telescope.actions').results_scrolling_up,
+        ["<c-h>"] = require('telescope.actions').preview_scrolling_left,
+        ["<c-l>"] = require('telescope.actions').preview_scrolling_right,
+        ["<c-s>"] = require('telescope.actions').complete_tag,
       }
     },
     layout_config = {
@@ -44,6 +49,23 @@ require('telescope').setup {
     },
   },
   pickers = {
+    -- nnoremap <Leader>bs <cmd>Telescope buffers<cr>
+    -- nnoremap <Leader>js <cmd>Telescope jumplist<cr>
+    -- nnoremap <Leader>of <cmd>Telescope oldfiles<cr>
+    -- nnoremap <Leader>nc <cmd>Telescope neoclip<cr>
+    -- nnoremap <Leader>zl <cmd>Telescope zoxide list<cr>
+    -- nnoremap <Leader>rj <cmd>Telescope bibtex<cr>
+    -- nnoremap <Leader>ch <cmd>Telescope command_history<cr>
+    -- nnoremap <Leader>er <cmd>Telescope registers<cr>
+    -- nnoremap <Leader>ht <cmd>Telescope help_tags<cr>
+    -- nnoremap <Leader>lr <cmd>Telescope lsp_references<cr>
+    -- nnoremap <Leader>li <cmd>Telescope lsp_incoming_calls<cr>
+    -- nnoremap <Leader>ls <cmd>Telescope lsp_document_symbols<cr>
+    -- nnoremap <Leader>lw <cmd>Telescope lsp_workspace_symbols<cr>
+    -- nnoremap <Leader>re <cmd>Telescope resume<cr>
+    -- nnoremap <Leader>he <cmd>Telescope cheat fd<cr>
+    -- nnoremap <Leader>ma <cmd>Telescope macros<cr>
+    -- nnoremap <Leader>no <cmd>Telescope noice<cr>
     buffers = {
       mappings = {
         n = {
@@ -84,10 +106,19 @@ require("telescope._extensions.zoxide.config").setup({
     --     print("Update to (" .. selection.z_score .. ") " .. selection.path)
     --   end
     -- },
+    ["<c-o>"] = {
+      action = function(selection)
+        vim.cmd("edit " .. selection.path)
+      end
+    },
+    ["<c-t>"] = {
+      action = function(selection)
+        vim.cmd("tabe " .. selection.path)
+      end
+    },
     ["<CR>"] = {
       action = function(selection)
         vim.cmd("edit " .. selection.path)
-        vim.cmd("lcd " .. selection.path)
       end
     },
   }

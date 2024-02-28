@@ -3,17 +3,18 @@ require("recorder").setup {
 	-- Named registers where macros are saved (single lowercase letters only).
 	-- The first register is the default register used as macro-slot after
 	-- startup.
-	slots = { "a", "b" },
+	slots = { "a", "b", "c", "d" },
 
 	mapping = {
 		startStopRecording = "q",
 		playMacro = "Q",
-		switchSlot = "<leader>ms",
-		editMacro = "cq",
-		deleteAllMacros = "dq",
-		yankMacro = "yq",
+		switchSlot = "<leader>vs",
+		editMacro = "<leader>ve",
+		deleteAllMacros = nil,
+		yankMacro = "<leader>vy",
 		-- ⚠️ this should be a string you don't use in insert mode during a macro
 		addBreakPoint = "##",
+
 	},
 
 	-- Clears all macros-slots on startup.
@@ -26,7 +27,7 @@ require("recorder").setup {
 	-- If enabled, only critical notifications are sent.
 	-- If you do not use a plugin like nvim-notify, set this to `true`
 	-- to remove otherwise annoying messages.
-	lessNotifications = false,
+	lessNotifications = true,
 
 	-- Use nerdfont icons in the status bar components and keymap descriptions
 	useNerdfontIcons = true,
@@ -49,5 +50,5 @@ require("recorder").setup {
 
 	-- [experimental] partially share keymaps with nvim-dap.
 	-- (See README for further explanations.)
-	dapSharedKeymaps = false,
+	dapSharedKeymaps = true,
 }

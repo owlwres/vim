@@ -29,6 +29,51 @@ require('lazy').setup({
     end
   },
 
+  -- ERGONOMICS
+  -- 'fedepujol/move.nvim',
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+  {
+    'nvim-focus/focus.nvim',
+    config = function()
+      require 'user.focus'
+    end,
+    version = false
+  },
+  {
+    'windwp/nvim-autopairs',
+    config = function()
+      require 'user.autopairs'
+    end
+  },
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  },
+  -- {
+  --   'gaoDean/autolist.nvim',
+  --   config = function()
+  --     require 'user.autolist'
+  --   end
+  -- },
+
   -- LUALINE
   -- {
   --   'nvim-lualine/lualine.nvim',
@@ -42,7 +87,7 @@ require('lazy').setup({
     },
     opts = {
       options = {
-        -- theme = require('github-nvim-theme.lualine.themes.github_dark_dimmed'),
+        theme = 'github_dark_dimmed',
         component_separators = { left = "│", right = "│" },
         section_separators = { left = "", right = "" },
         globalstatus = true,
@@ -94,84 +139,100 @@ require('lazy').setup({
 
   -- SOURCE CONTROL
   {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+      -- Only one of these is needed, not both.
+      "nvim-telescope/telescope.nvim", -- optional
+    },
+    config = function()
+      require 'user.neogit'
+    end
+  },
+  {
     'lewis6991/gitsigns.nvim',
     config = function()
       require 'user.gitsigns'
     end
   },
 
-  'sindrets/diffview.nvim',
-
   -- TASK MANAGEMENT
-  'stevearc/overseer.nvim',
-
-  -- ERGONOMICS
-  'fedepujol/move.nvim',
   {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
+    'stevearc/overseer.nvim',
+    config = function()
+      require 'user.overseer'
     end,
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
+    opts = {},
   },
-  {
-    'nvim-focus/focus.nvim',
-    config = function()
-      require 'user.focus'
-    end,
-    version = false
-  },
-  {
-    'windwp/nvim-autopairs',
-    config = function()
-      require 'user.autopairs'
-    end
-  },
-  {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end
-  },
-  -- {
-  --   'gaoDean/autolist.nvim',
-  --   config = function()
-  --     require 'user.autolist'
-  --   end
-  -- },
 
 
   -- PRIVACY
   -- 'laytan/cloak.nvim',
 
   -- BUFFERS MANAGEMENT
-  { 'axkirillov/hbac.nvim',
+  -- {
+  --   'axkirillov/hbac.nvim',
+  --   config = function()
+  --     require("hbac").setup({
+  --       autoclose                  = true, -- set autoclose to false if you want to close manually
+  --       threshold                  = 10,   -- hbac will start closing unedited buffers once that number is reached
+  --       close_command              = function(bufnr)
+  --         vim.api.nvim_buf_delete(bufnr, {})
+  --       end,
+  --       close_buffers_with_windows = false, -- hbac will close buffers with associated windows if this option is `true`
+  --       telescope                  = {
+  --         -- See #telescope-configuration below
+  --       },
+  --     })
+  --   end
+  -- },
+
+  -- TABS
+  {
+    'LukasPietzschmann/telescope-tabs',
     config = function()
-     require("hbac").setup({
-      autoclose     = true, -- set autoclose to false if you want to close manually
-      threshold     = 10, -- hbac will start closing unedited buffers once that number is reached
-      close_command = function(bufnr)
-        vim.api.nvim_buf_delete(bufnr, {})
-      end,
-      close_buffers_with_windows = false, -- hbac will close buffers with associated windows if this option is `true`
-      telescope = {
-        -- See #telescope-configuration below
-        },
-      })
-    end
+      require('telescope').load_extension 'telescope-tabs'
+      require('telescope-tabs').setup {
+        -- Your custom config :^)
+      }
+    end,
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+  },
+  {
+    'nanozuki/tabby.nvim',
+    event = 'VimEnter',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require 'user.tabby'
+    end,
   },
 
+  -- DEVELOPMENT
+  {
+    'folke/neodev.nvim',
+    -- opts = {}
+    -- config = function()
+    --   require 'user.neodev'
+    -- end
+  },
+  -- 'bfredl/nvim-luadev',
+
   -- LSP
+  -- {
+  --   'ray-x/navigator.lua',
+  --   config = function()
+  --         require'user.navigator'
+  --   end,
+  --   dependencies = {
+  --     {
+  --       'ray-x/guihua.lua',
+  --       build = 'cd lua/fzy && make'
+  --     },
+  --     { 'neovim/nvim-lspconfig' },
+  --   },
+  -- },
+
   {
     'stevearc/aerial.nvim',
     config = function()
@@ -187,12 +248,22 @@ require('lazy').setup({
   {
     'neovim/nvim-lspconfig',
     config = function()
-      require 'user.lsp' ({})
+      require 'user.lsp' ()
     end,
-    dependencies = { 'hinell/lsp-timeout.nvim' },
+    -- dependencies = { 'hinell/lsp-timeout.nvim' },
+    --
+
   },
 
+  'Hoffs/omnisharp-extended-lsp.nvim',
 
+  -- LINTING
+  -- {
+  --   'mfussenegger/nvim-lint',
+  --   config = function()
+  --     require('user.lint')
+  --   end
+  -- },
   -- TREESITTER
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -225,29 +296,69 @@ require('lazy').setup({
   },
 
 
+
   -- ORG MODE
-  {
-    'nvim-orgmode/orgmode',
-    config = function()
-      require 'user.orgmode'
-    end
-  },
+  -- {
+  --   'nvim-orgmode/orgmode',
+  --   config = function()
+  --     require 'user.orgmode'
+  --   end
+  -- },
 
   -- COMPLETION
+  -- {
+  --   'ms-jpq/coq_nvim',
+  --   branch = 'coq',
+  --   config = function()
+  --     require 'user.coq'
+  --   end,
+  --   dependencies = {
+  --     {
+  --       'ms-jpq/coq.thirdparty',
+  --       config = function()
+  --         require("coq_3p") {
+  --           { src = "nvimlua", short_name = "nLUA" }
+  --         }
+  --       end
+  --     }
+  --   }
+  -- },
   {
-    'ms-jpq/coq_nvim',
-    branch = 'coq',
+    "hrsh7th/nvim-cmp",
     config = function()
-      require 'user.coq'
+      require 'user.cmp'
     end,
     dependencies = {
-      { 'ms-jpq/coq.artifacts', branch = 'artifacts' },
+      { "hrsh7th/cmp-buffer" },
+      { 'tzachar/fuzzy.nvim' },
+      { "tzachar/cmp-fuzzy-buffer" },
+      { "tzachar/cmp-fuzzy-path" },
+      { "hrsh7th/cmp-nvim-lua" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-nvim-lsp-document-symbol" },
+      { "hrsh7th/cmp-nvim-lsp-signature-help" },
+      { "dmitmel/cmp-cmdline-history" },
+      { "FelipeLema/cmp-async-path" },
+      { "neovim/nvim-lspconfig" },
+      { "L3MON4D3/LuaSnip" },
+      { "L3MON4D3/cmp-luasnip-choice" },
+      { "saadparwaiz1/cmp_luasnip" },
+      { "petertriho/cmp-git" },
+      { "lukas-reineke/cmp-rg" },
+      {
+        'doxnit/cmp-luasnip-choice',
+        config = function()
+          require('cmp_luasnip_choice').setup({
+            auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
+          })
+        end
+      },
+
+      -- { "hrsh7th/cmp-path" },
+      -- { "simrat39/rust-tools.nvim" },
     }
   },
 
-  -- DEVELOPMENT
-  'folke/neodev.nvim',
-  'bfredl/nvim-luadev',
 
   -- DEBUGGING
   -- Plug 'puremourning/vimspector'
@@ -282,10 +393,15 @@ require('lazy').setup({
 
   -- SNIPPETS
   -- follow latest release and install jsregexp.
+
   {
     'L3MON4D3/LuaSnip',
     version = 'v2.*',
-    build = 'make install_jsregexp'
+    build = 'make install_jsregexp',
+    dependencies = { "rafamadriz/friendly-snippets" },
+    config = function(_, opts)
+      require 'user.luasnip' (opts)
+    end,
   },
 
 
@@ -311,12 +427,12 @@ require('lazy').setup({
   },
 
   -- POMODORO
-  {
-    'epwalsh/pomo.nvim',
-    config = function()
-      require 'user.pomo'
-    end
-  },
+  -- {
+  --   'epwalsh/pomo.nvim',
+  --   config = function()
+  --     require 'user.pomo'
+  --   end
+  -- },
 
   -- EASY MOTION
   -- 'phaazon/hop.nvim'
@@ -423,7 +539,13 @@ require('lazy').setup({
       },
     }
   },
+  -- {
+  --   "cbochs/grapple.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  -- },
 
   -- MISC
   'fmoralesc/vim-extended-autochdir',
 })
+
+require('scratch'):setup()

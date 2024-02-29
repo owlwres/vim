@@ -25,7 +25,7 @@ cmap <C-l> <S-right>
 
 " SESSIONS / TABS
 set showtabline=2
-set sessionoptions=blank,buffers,curdir,folds,globals,help,tabpages,terminal,winsize
+set sessionoptions=blank,buffers,localoptions,options,folds,globals,help,tabpages,terminal,winsize
 
 
 set conceallevel=3

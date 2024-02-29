@@ -1,4 +1,4 @@
-  local path = require('plenary.path')
+local path = require('plenary.path')
 -- yank file contents to clipboard
 
 function file_exists(filename)
@@ -53,7 +53,6 @@ function prompt_yanked_filename()
 
   session_input:mount()
 end
-
 
 local mapopts = {
   silent = true,

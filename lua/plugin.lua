@@ -365,7 +365,6 @@ require('lazy').setup({
   -- Plug 'puremourning/vimspector'
   {
     'rcarriga/nvim-dap-ui',
-    lazy = true,
     config = function()
       require 'user.dap-ui'
     end,

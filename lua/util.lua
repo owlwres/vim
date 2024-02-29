@@ -1,3 +1,4 @@
+  local path = require('plenary.path')
 -- yank file contents to clipboard
 
 function file_exists(filename)

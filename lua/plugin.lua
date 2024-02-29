@@ -209,13 +209,6 @@ require('lazy').setup({
   },
 
   -- DEVELOPMENT
-  {
-    'folke/neodev.nvim',
-    -- opts = {}
-    -- config = function()
-    --   require 'user.neodev'
-    -- end
-  },
   -- 'bfredl/nvim-luadev',
 
   -- LSP
@@ -250,9 +243,17 @@ require('lazy').setup({
     config = function()
       require 'user.lsp' ()
     end,
-    -- dependencies = { 'hinell/lsp-timeout.nvim' },
-    --
-
+    dependencies = {
+      -- 'hinell/lsp-timeout.nvim',
+      {
+        'folke/neodev.nvim',
+        config = true
+        -- opts = {}
+        -- config = function()
+        --   require 'user.neodev'
+        -- end
+      },
+    },
   },
 
   'Hoffs/omnisharp-extended-lsp.nvim',

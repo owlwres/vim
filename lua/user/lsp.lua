@@ -93,7 +93,8 @@ return function()
               callSnippet = "Replace"
             },
             diagnostics = {
-              disable = { "missing-fields" },
+              disable = {
+              },
               globals = {
                 'vim'
               }

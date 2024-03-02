@@ -14,7 +14,9 @@ require("persisted").setup({
     reset_prompt = true,                                            -- Reset the Telescope prompt after an action?
   }
 })
+
 local fp_sep = vim.loop.os_uname().sysname:lower():match("windows") and "\\" or "/" -- \ for windows, mac and linux both use \
+
 function get_session_filename(session)
   local config = require('persisted.config')
   local save_dir = config.options.save_dir

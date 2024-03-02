@@ -140,6 +140,8 @@ vim.cmd [[
 -- ]]
 
 -- sessions
+
+
 -- :SessionToggle - Determines whether to load, start or stop a session
 -- :SessionStart - Start recording a session. Useful if autosave = false
 -- :SessionStop - Stop recording a session
@@ -151,9 +153,9 @@ vim.cmd [[
 -- local otheropts = {silent = true, noremap = true, desc = "?1"}
 -- vim.api.nvim_set_keymap('n', '<leader>ss', '<cmd>SessionStart<cr>', mapopts)
 -- vim.api.nvim_set_keymap('n', '<leader>st', '<cmd>SessionStop<cr>', mapopts)
-vim.api.nvim_set_keymap('n', '<leader>sl', '<cmd>SessionLoadLast<cr>', mapopts)
-vim.api.nvim_set_keymap('n', '<leader>su', '<cmd>SessionSave<cr>', mapopts)
-vim.api.nvim_set_keymap('n', '<leader>sj', '<cmd>Telescope persisted<cr>', mapopts)
+-- vim.api.nvim_set_keymap('n', '<leader>sl', '<cmd>SessionLoadLast<cr>', mapopts)
+-- vim.api.nvim_set_keymap('n', '<leader>su', '<cmd>SessionSave<cr>', mapopts)
+-- vim.api.nvim_set_keymap('n', '<leader>sj', '<cmd>Telescope persisted<cr>', mapopts)
 -- vim.api.nvim_set_keymap('n', '<leader>su', '<cmd>SessionSave<cr>', jqpts)
 -- vim.api.nvim_set_keymap('n', '<leader>qs', '<cmd>SessionStart<cr>', jqpts)
 -- restore the session for the current directory
@@ -162,12 +164,12 @@ vim.api.nvim_set_keymap('n', '<leader>sj', '<cmd>Telescope persisted<cr>', mapop
 
 -- refactoring
 -- remap to open the Telescope refactoring menu in visual mode
-vim.api.nvim_set_keymap(
-  "v",
-  "<leader>rr",
-  "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
-  { noremap = true }
-)
+-- vim.api.nvim_set_keymap(
+--   "v",
+--   "<leader>rr",
+--   "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+--   { noremap = true }
+-- )
 
 -- dap
 vim.cmd [[
@@ -222,7 +224,7 @@ vim.api.nvim_set_keymap("n", "<space>8", "8gt", mapopts)
 --
 vim.api.nvim_set_keymap("n", "§wj", "<c-w>j", mapopts)
 vim.api.nvim_set_keymap("n", "§wk", "<c-w>k", mapopts)
-vim.api.nvim_set_keymap("n", "<c-w>k", "<c-w>c", mapopts)
+vim.api.nvim_set_keymap("n", "<c-w>d", "<c-w>c", mapopts)
 vim.api.nvim_set_keymap("n", "§wh", "<c-w>h", mapopts)
 vim.api.nvim_set_keymap("n", "§wl", "<c-w>l", mapopts)
 vim.api.nvim_set_keymap("n", "§wu", "<c-w>s", mapopts)

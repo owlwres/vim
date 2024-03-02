@@ -10,14 +10,14 @@ end
 
 local icons = require("utils").icons
 
-local soldark = require("github-nvim-theme.lualine.themes.github_dark_dimmed")
-soldark.normal.a.gui = ""
-soldark.insert.a.gui = ""
-soldark.visual.a.gui = ""
+local ghdarkdim = require("github-nvim-theme.lualine.themes.github_dark_dimmed")
+ghdarkdim.normal.a.gui = ""
+ghdarkdim.insert.a.gui = ""
+ghdarkdim.visual.a.gui = ""
 lualine.setup({
 	extensions = { "fugitive", "symbols-outline", "nvim-tree", "lazy" },
 	options = {
-		theme = soldark,
+		theme = ghdarkdim,
 		component_separators = { left = "", right = "" },
 		disabled_filetypes = { statusline = { "alpha" } },
 	},

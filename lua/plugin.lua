@@ -28,9 +28,29 @@ require('lazy').setup({
       vim.cmd('colorscheme github_dark_dimmed')
     end
   },
-
   -- ERGONOMICS
   -- 'fedepujol/move.nvim',
+  -- {
+  --   'nvim-tree/nvim-tree.lua',
+  --   config = function()
+  --     require 'user.tree'
+  --   end,
+  --   dependencies = {
+  --     'nvim-tree/nvim-web-devicons'
+  --   }
+  -- },
+  -- {
+  --   'obaland/vfiler.vim',
+  --   config = function()
+  --     require 'user.vfiler'
+  --   end
+  -- },
+  {
+    'prichrd/netrw.nvim',
+    config = function()
+      require('user.netrw')
+    end
+  },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -100,6 +120,7 @@ require('lazy').setup({
           { "fancy_mode", width = 3 }
         },
         lualine_b = {
+          { "session" },
           { "fancy_branch" },
           { "fancy_diff" },
         },
@@ -118,7 +139,7 @@ require('lazy').setup({
         },
         lualine_z = {
           { "time" },
-          { "space" }
+          { "space" },
         },
       }
     },
@@ -128,7 +149,7 @@ require('lazy').setup({
   'tpope/vim-eunuch',
   'tpope/vim-sensible',
   -- 'tpope/vim-surround',
-  'tpope/vim-fugitive',
+  -- 'tpope/vim-fugitive',
   'tpope/vim-vinegar',
   'tpope/vim-commentary',
   'tpope/vim-dadbod',
@@ -259,12 +280,12 @@ require('lazy').setup({
   'Hoffs/omnisharp-extended-lsp.nvim',
 
   -- LINTING
-  -- {
-  --   'mfussenegger/nvim-lint',
-  --   config = function()
-  --     require('user.lint')
-  --   end
-  -- },
+  {
+    'mfussenegger/nvim-lint',
+    config = function()
+      require('user.lint')
+    end
+  },
   -- TREESITTER
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -517,11 +538,18 @@ require('lazy').setup({
   -- 'folke/persistence.nvim',
   -- 'rmagatti/auto-session',
   {
-    'olimorris/persisted.nvim',
+    'jedrzejboczar/possession.nvim',
     config = function()
-      require 'user.persisted'
-    end
+      require 'user.possession'
+    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
+  -- {
+  --   'olimorris/persisted.nvim',
+  --   config = function()
+  --     require 'user.persisted'
+  --   end
+  -- },
   -- NOTIFICATIONS
   -- {
   --   'rcarriga/nvim-notify',

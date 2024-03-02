@@ -1,7 +1,7 @@
 local M = require("lualine.component"):extend()
 function M:init(options)
   options = options or {}
-  options.icon = options.icon or { "", color = { fg = "Black" } }
+  -- options.icon = options.icon or { "", color = { fg = "Black" } }
   local default_config = {
     command = 'yabai -m query --spaces --space | jq ".index"',
     offset = 9

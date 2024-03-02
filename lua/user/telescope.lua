@@ -91,10 +91,11 @@ require('telescope').load_extension('zoxide')
 require('telescope').load_extension('neoclip')
 -- require("telescope").load_extension "frecency"
 require("telescope").load_extension("cheat")
-require("telescope").load_extension("persisted")
+-- require("telescope").load_extension("persisted")
 require("telescope").load_extension("ui-select")
 require("telescope").load_extension("aerial")
 require("telescope").load_extension("notify")
+require('telescope').load_extension('possession')
 
 local z_utils = require("telescope._extensions.zoxide.utils")
 

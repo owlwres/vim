@@ -1,3 +1,8 @@
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+
+vim.g.netrw_keepdir = 0
+
 vim.cmd [[
 
 " GENERAL CONFIGURATION

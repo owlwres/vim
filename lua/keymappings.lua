@@ -4,6 +4,16 @@ local mapopts = { noremap = true, silent = true }
 
 -- netrw integration
 
+vim.keymap.set('n', '-', function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  if vim.api.nvim_buf_get_option(bufnr, 'filetype') ~= 'netrw' then
+    vim.fn.execute('Explore')
+  else
+    vim.fn.feedkeys('-')
+    vim.api.nvim_buf_set_name(bufnr, '.')
+  end
+end, mapopts)
+
 local netrw_telescope_augroup = vim.api.nvim_create_augroup("netrw_telescope", { clear = true })
 vim.api.nvim_create_autocmd('filetype', {
   group = netrw_telescope_augroup,
@@ -27,29 +37,28 @@ vim.api.nvim_create_autocmd('filetype', {
   end
 })
 
-vim.cmd [[
-
-	augroup netrw_mapping
-			au!
-			autocmd filetype netrw call NetrwMapping()
-	augroup END
-
-	function! NetrwMapping()
-			nnoremap <buffer> <C-n> <Plug>NetrwLcd<cmd>term<CR>i
-			nnoremap <buffer> o <Plug>NetrwLocalBrowseCheck
-			nnoremap <buffer> ~ <cmd>NetrwKeepj call netrw#LocalBrowseCheck(expand('~/Work'))<cr>
-      nnoremap <buffer> <Leader>sd <Plug>NetrwLcd<cmd>Easypick foldersbelow<cr>
-      let s_mapping = maparg("s", "n", 0, 1)
-      let S_mapping = maparg("S", "n", 0, 1)
-      if s_mapping.buffer != 0
-        nunmap <buffer> s
-      end
-      if S_mapping.buffer != 0
-        nunmap <buffer> S
-      end
-	endfunction
-
-]]
+local netrw_mapping_augroup = vim.api.nvim_create_augroup('netrw_mapping', { clear = true })
+vim.api.nvim_create_autocmd('filetype', {
+  group = netrw_mapping_augroup,
+  pattern = 'netrw',
+  callback = function()
+    -- local netrwmapopts = vim.deepcopy(mapopts)
+    -- netrwmapopts.buffer = true
+    local netrwmapopts = { buffer = true }
+    vim.keymap.set('n', '<C-n>', '<cmd>term<CR>i', netrwmapopts)
+    vim.keymap.set('n', 'o', '<Plug>NetrwLocalBrowseCheck', netrwmapopts)
+    vim.keymap.set('n', '~', '<cmd>NetrwKeepj call netrw#LocalBrowseCheck(expand("~/Work"))<cr>', netrwmapopts)
+    vim.keymap.set('n', '<leader>sd', '<cmd>Easypick foldersbelow<cr> ', netrwmapopts)
+    local s_mapping = vim.fn.maparg('s', 'n', nil, true)
+    local S_mapping = vim.fn.maparg('S', 'n', nil, true)
+    if s_mapping.buffer ~= 0 then
+      vim.keymap.del({ 'n' }, 's', { buffer = true })
+    end
+    if S_mapping.buffer ~= 0 then
+      vim.keymap.del({ 'n' }, 'S', { buffer = true })
+    end
+  end
+})
 
 -- telescope
 --

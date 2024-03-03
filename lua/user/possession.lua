@@ -7,7 +7,7 @@ require('possession').setup {
   logfile = false,
   prompt_no_cr = false,
   autosave = {
-    current = true,  -- or fun(name): boolean
+    current = true,   -- or fun(name): boolean
     tmp = false,      -- or fun(): boolean
     tmp_name = 'tmp', -- or fun(): string
     on_load = true,
@@ -25,71 +25,17 @@ require('possession').setup {
   },
   hooks = {
     before_save = function(name)
+      require('user.possession-handler').before_save_netrw(name)
       return {}
-      -- local netrw_buffers = {}
-      -- local buffers = vim.api.nvim_list_bufs()
-      -- for index, bufnr in ipairs(buffers) do
-      --   local buffer_type = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-      --   local buffer_name = vim.fn.bufname(bufnr)
-      --   if buffer_type == 'netrw' then
-      --     vim.api.nvim_set_current_buf(bufnr)
-      --     vim.schedule(function()
-      --       local winnr = vim.api.nvim_get_current_win()
-      --       local tabnr = vim.api.nvim_get_current_tabpage()
-      --       vim.fn.execute('cd')
-      --       vim.notify(tostring(winnr) .. ' ' .. tostring(tabnr) .. vim.fn.getcwd())
-      --       table.insert(netrw_buffers, bufnr)
-      --     end)
-      --   end
-      -- end
-      -- return {
-      --   netrw_buffers = netrw_buffers
-      -- }
     end,
-    after_save = function(name, user_data, aborted) end,
-    before_load = function(name, user_data) return user_data end,
+    after_save = function(name, user_data, aborted)
+      -- require('user.possession-handler').after_save_netrw(name, user_data)
+    end,
+    before_load = function(name, user_data)
+      return user_data
+    end,
     after_load = function(name, user_data)
-      local buffers = vim.api.nvim_list_bufs()
-      local current_tab_id = vim.api.nvim_get_current_tabpage()
-      local current_window_id = vim.api.nvim_get_current_win()
-      local tabs = vim.api.nvim_list_tabpages()
-      for index, tabid in ipairs(tabs) do
-        -- vim.schedule(function()
-        local success = pcall(vim.api.nvim_set_current_tabpage, tabid)
-        if success then
-          -- handle netrw windows
-          local netrw_windows = vim.tbl_filter(function(winid)
-            local win_bufid = vim.api.nvim_win_get_buf(winid)
-            return vim.api.nvim_buf_get_option(win_bufid, 'filetype') == 'netrw'
-          end, vim.api.nvim_tabpage_list_wins(tabid))
-          for index, winid in ipairs(netrw_windows) do
-            local success = pcall(vim.api.nvim_set_current_win, winid)
-            if success then
-              vim.fn.execute('e .') -- .. buffer_name)
-              vim.fn.execute('set bl')
-            end
-          end
-          -- handle terminal windows
-          local terminal_windows = vim.tbl_filter(function(winid)
-            local win_bufid = vim.api.nvim_win_get_buf(winid)
-            local bufname = vim.fn.bufname(win_bufid)
-            return string.match(bufname, '^term') ~= nil
-            -- return vim.api.nvim_buf_get_option(win_bufid, 'filetype') == 'zsh'
-          end, vim.api.nvim_tabpage_list_wins(tabid))
-          for index, winid in ipairs(terminal_windows) do
-            local success = pcall(vim.api.nvim_set_current_win, winid)
-            if success then
-              local bufnr = vim.api.nvim_win_get_buf(winid)
-              vim.notify('found terminal buffer')
-              vim.fn.execute('set ma')
-              vim.api.nvim_buf_set_lines(bufnr, -2, -1, false, {'a','a','a'})
-            end
-          end
-        end
-        -- end)
-      end
-      pcall(vim.api.nvim_set_current_tabpage, current_tab_id)
-      pcall(vim.api.nvim_set_current_win, current_window_id)
+      require('user.possession-handler').after_load_netrw(name, user_data)
     end,
   },
   plugins = {
@@ -103,7 +49,7 @@ require('possession').setup {
         custom = false, -- or fun(win): boolean
       },
     },
-    delete_hidden_buffers = false,
+    delete_hidden_buffers = true,
     -- delete_hidden_buffers = {
     --   hooks = {
     --     'before_load',
@@ -114,7 +60,7 @@ require('possession').setup {
     nvim_tree = false,
     neo_tree = false,
     symbols_outline = false,
-    tabby = false,
+    tabby = true,
     dap = true,
     dapui = true,
     neotest = true,
@@ -184,6 +130,7 @@ local mapopts = {
   desc = 'prompt new session'
 }
 vim.keymap.set('n', '<leader>sn', prompt_new_session, mapopts)
+vim.keymap.set('n', '<leader>sn', '<cmd>PossessionSave! 1<cr>', mapopts)
 vim.keymap.set('n', '<leader>su', '<cmd>PossessionSave!<cr>', mapopts)
 vim.keymap.set('n', '<leader>sl', '<cmd>PossessionLoad<cr>', mapopts)
 vim.keymap.set('n', '<leader>sj', '<cmd>Telescope possession list<cr>', mapopts)

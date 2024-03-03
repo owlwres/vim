@@ -1,5 +1,5 @@
 local M = {}
-M.before_save_netrw = function(name)
+local function handle_netrw_windows()
   local current_tab_id = vim.api.nvim_get_current_tabpage()
   local current_window_id = vim.api.nvim_get_current_win()
   local tabs = vim.api.nvim_list_tabpages()
@@ -23,39 +23,17 @@ M.before_save_netrw = function(name)
   vim.api.nvim_set_current_tabpage(current_tab_id)
   vim.api.nvim_set_current_win(current_window_id)
 end
+M.before_save_netrw = function(name)
+  handle_netrw_windows()
+end
 
 M.after_save_netrw = function(name, user_data)
 end
 
 M.after_load_netrw = function(name, user_data)
-  local buffers = vim.api.nvim_list_bufs()
-  local current_tab_id = vim.api.nvim_get_current_tabpage()
-  local current_window_id = vim.api.nvim_get_current_win()
-  local tabs = vim.api.nvim_list_tabpages()
-  for index, tabid in ipairs(tabs) do
-    -- local success = pcall(vim.api.nvim_set_current_tabpage, tabid)
-    local success = vim.api.nvim_set_current_tabpage(tabid)
-    if success then
-      -- handle netrw windows
-      local netrw_windows = vim.tbl_filter(function(winid)
-        local win_bufid = vim.api.nvim_win_get_buf(winid)
-        return vim.api.nvim_buf_get_option(win_bufid, 'filetype') == 'netrw'
-      end, vim.api.nvim_tabpage_list_wins(tabid))
-      for index, winid in ipairs(netrw_windows) do
-        local success = vim.api.nvim_set_current_win(winid)
-        if success then
-          vim.fn.execute('e .') -- .. buffer_name)
-          vim.api.nvim_buf_set_name(win_bufid, '.')
-          vim.fn.execute('set bl')
-        end
-      end
-      -- handle terminal windows
-    end
-    -- end)
-  end
-  vim.api.nvim_set_current_tabpage(current_tab_id)
-  vim.api.nvim_set_current_win(current_window_id)
+  handle_netrw_windows()
 end
+
 local function get_leftmost_window()
 end
 local function get_rightmost_window()

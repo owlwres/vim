@@ -150,7 +150,7 @@ require('lazy').setup({
   'tpope/vim-sensible',
   -- 'tpope/vim-surround',
   -- 'tpope/vim-fugitive',
-  'tpope/vim-vinegar',
+  -- 'tpope/vim-vinegar',
   'tpope/vim-commentary',
   'tpope/vim-dadbod',
   'tpope/vim-repeat',

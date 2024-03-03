@@ -60,7 +60,7 @@ require('possession').setup {
     nvim_tree = false,
     neo_tree = false,
     symbols_outline = false,
-    tabby = true,
+    tabby = false,
     dap = true,
     dapui = true,
     neotest = true,

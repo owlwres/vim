@@ -1,6 +1,7 @@
 -- leadghr
 local keymap = vim.api.nvim_set_keymap
 local mapopts = { noremap = true, silent = true }
+local Path = require('plenary.path')
 
 -- netrw integration
 
@@ -8,9 +9,6 @@ vim.keymap.set('n', '-', function()
   local bufnr = vim.api.nvim_get_current_buf()
   if vim.api.nvim_buf_get_option(bufnr, 'filetype') ~= 'netrw' then
     vim.fn.execute('Explore')
-  else
-    vim.fn.feedkeys('-')
-    vim.api.nvim_buf_set_name(bufnr, '.')
   end
 end, mapopts)
 
@@ -57,6 +55,14 @@ vim.api.nvim_create_autocmd('filetype', {
     if S_mapping.buffer ~= 0 then
       vim.keymap.del({ 'n' }, 'S', { buffer = true })
     end
+    vim.keymap.set('n', '-', function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local path = Path.new(vim.fn.getcwd())
+      local parent = path:parent().filename
+      vim.cmd('Explore ' .. parent)
+      -- local bufnr = vim.api.nvim_get_current_buf()
+      -- vim.api.nvim_buf_set_name(bufnr, parent)
+    end, netrwmapopts)
   end
 })
 

@@ -28,14 +28,14 @@ require('telescope').setup {
     },
   },
   extensions = {
-    aerial = {
-      -- Display symbols as <root>.<parent>.<symbol>
-      show_nesting = {
-        ["_"] = true, -- This key will be the default
-        -- json = true,   -- You can set the option for specific filetypes
-        -- yaml = true,
-      },
-    },
+    -- aerial = {
+    --   -- Display symbols as <root>.<parent>.<symbol>
+    --   show_nesting = {
+    --     ["_"] = true, -- This key will be the default
+    --     -- json = true,   -- You can set the option for specific filetypes
+    --     -- yaml = true,
+    --   },
+    -- },
     ["ui-select"] = {
       require("telescope.themes").get_dropdown {
         -- even more opts
@@ -93,7 +93,7 @@ require('telescope').load_extension('neoclip')
 require("telescope").load_extension("cheat")
 -- require("telescope").load_extension("persisted")
 require("telescope").load_extension("ui-select")
-require("telescope").load_extension("aerial")
+-- require("telescope").load_extension("aerial")
 require("telescope").load_extension("notify")
 require('telescope').load_extension('possession')
 

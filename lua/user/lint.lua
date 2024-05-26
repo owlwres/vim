@@ -1,7 +1,7 @@
 require('lint').linters_by_ft = {
   markdown = { 'vale', },
   lua = { 'luacheck' },
-  rust = { 'rstcheck' },
+  -- rust = { 'rstcheck' },
   zsh = { 'zsh' },
 }
 

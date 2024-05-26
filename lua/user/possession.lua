@@ -130,7 +130,7 @@ local mapopts = {
   desc = 'prompt new session'
 }
 vim.keymap.set('n', '<leader>sn', prompt_new_session, mapopts)
-vim.keymap.set('n', '<leader>sn', '<cmd>PossessionSave! 1<cr>', mapopts)
+-- vim.keymap.set('n', '<leader>sn', '<cmd>PossessionSave! 1<cr>', mapopts)
 vim.keymap.set('n', '<leader>su', '<cmd>PossessionSave!<cr>', mapopts)
 vim.keymap.set('n', '<leader>sl', '<cmd>PossessionLoad<cr>', mapopts)
 vim.keymap.set('n', '<leader>sj', '<cmd>Telescope possession list<cr>', mapopts)

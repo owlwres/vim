@@ -187,16 +187,21 @@ require("noice").setup({
   ---@type NoiceRouteConfig[]
   routes = {
     {
-      view = "split",
-      filter = { event = "msg_show", min_height = 20 },
+      filter = {
+        any = {
+          -- { find = "written" },
+          -- { find = "swap", },
+          -- {
+          --   event = "msg_show",
+          --   -- opts = { skip = true },
+          --   has = false,
+          -- }
+        }
+      },
     },
     {
-      filter = {
-        event = "msg_show",
-        kind = "",
-        find = "written",
-      },
-      opts = { skip = true },
+      view = "split",
+      filter = { event = "msg_show", min_height = 20 },
     },
   },
   -- routes = {

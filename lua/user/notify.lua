@@ -26,7 +26,7 @@ require("notify").setup({
     TRACE = "✎",
     WARN = ""
   },
-  level = 1,
+  level = 2,
   minimum_width = 50,
   render = gate_render,
   stages = "fade",

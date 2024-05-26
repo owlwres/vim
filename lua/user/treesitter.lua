@@ -2,8 +2,9 @@ require 'nvim-treesitter.configs'.setup
 ---@diagnostic disable-next-line: missing-fields
     {
       --   -- A list of parser names, or "all"
-      ensure_installed = {
-        "typescript", "haskell", "fennel", "lua", "python", "rust", "vim", "vimdoc", "markdown", "markdown_inline", "regex", "bash", "c_sharp"
+      ensure_installed =
+      {
+        "typescript", "haskell", "fennel", "lua", "python", "rust", "vim", "vimdoc", "regex", "bash", "c_sharp", "markdown", "markdown_inline"
       },
 
       --   -- Install parsers synchronously ()
@@ -13,8 +14,10 @@ require 'nvim-treesitter.configs'.setup
       },
       highlight = {
         enable = true,
-        disable = { "markdown" }
-      }
+        disable = {
+          "markdown"
+        }
+      },
       --   -- Automatically install missing parsers when entering buffer
       -- auto_install = true,
 

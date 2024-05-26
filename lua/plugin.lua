@@ -20,6 +20,15 @@ require('lazy').setup({
   -- { 'tsuyoshicho/StatuslineUpdateTimer.vim', commit ='08b1560bd3578492404adcd7bb8cbcb004b5c9c9'},
 
   -- THEME
+  -- {
+  --   'rebelot/kanagawa.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd('colorscheme kanagawa-dragon')
+  --   end
+  -- },
+  --
   {
     'projekt0n/github-nvim-theme',
     lazy = false,
@@ -28,6 +37,7 @@ require('lazy').setup({
       vim.cmd('colorscheme github_dark_dimmed')
     end
   },
+
   -- ERGONOMICS
   -- 'fedepujol/move.nvim',
   -- {
@@ -215,7 +225,7 @@ require('lazy').setup({
     config = function()
       require('telescope').load_extension 'telescope-tabs'
       require('telescope-tabs').setup {
-        -- Your custom config :^)
+        -- Your custom config ;^)
       }
     end,
     dependencies = { 'nvim-telescope/telescope.nvim' },
@@ -228,6 +238,11 @@ require('lazy').setup({
       require 'user.tabby'
     end,
   },
+
+  -- PANDOC
+  'vim-pandoc/vim-pandoc',
+  'vim-pandoc/vim-pandoc-syntax',
+
 
   -- DEVELOPMENT
   -- 'bfredl/nvim-luadev',
@@ -247,18 +262,18 @@ require('lazy').setup({
   --   },
   -- },
 
-  {
-    'stevearc/aerial.nvim',
-    config = function()
-      require 'user.aerial'
-    end,
-    opts = {},
-    -- Optional dependencies
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons"
-    },
-  },
+  -- {
+  --   'stevearc/aerial.nvim',
+  --   config = function()
+  --     require 'user.aerial'
+  --   end,
+  --   opts = {},
+  --   -- Optional dependencies
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "nvim-tree/nvim-web-devicons"
+  --   },
+  -- },
   {
     'neovim/nvim-lspconfig',
     config = function()
@@ -286,7 +301,17 @@ require('lazy').setup({
       require('user.lint')
     end
   },
+
   -- TREESITTER
+  {
+    'nvim-treesitter/nvim-treesitter',
+    tag = "v0.9.2",
+    -- pin = true,
+    config = function()
+      require 'user.treesitter'
+    end,
+  },
+
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
     config = function()
@@ -320,12 +345,12 @@ require('lazy').setup({
 
 
   -- ORG MODE
-  -- {
-  --   'nvim-orgmode/orgmode',
-  --   config = function()
-  --     require 'user.orgmode'
-  --   end
-  -- },
+  {
+    'nvim-orgmode/orgmode',
+    config = function()
+      require 'user.orgmode'
+    end
+  },
 
   -- COMPLETION
   -- {
@@ -371,7 +396,7 @@ require('lazy').setup({
         'doxnit/cmp-luasnip-choice',
         config = function()
           require('cmp_luasnip_choice').setup({
-            auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
+            auto_open = true, -- Automatically open nvim-cmp on choice node (default; true)
           })
         end
       },
@@ -396,6 +421,7 @@ require('lazy').setup({
           require 'user.dap'
         end,
       },
+      { "nvim-neotest/nvim-nio" }
     }
   },
   {
@@ -435,15 +461,11 @@ require('lazy').setup({
   -- 'lervag/vimtex',
 
 
-  -- PANDOC
-  'vim-pandoc/vim-pandoc',
-  'vim-pandoc/vim-pandoc-syntax',
-
   -- WIKI
   {
     'lervag/wiki.vim',
     config = function()
-      vim.g.wiki_root = '~/wiki'
+      require 'user.wiki'
     end,
   },
 

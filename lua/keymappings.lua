@@ -55,14 +55,14 @@ vim.api.nvim_create_autocmd('filetype', {
     if S_mapping.buffer ~= 0 then
       vim.keymap.del({ 'n' }, 'S', { buffer = true })
     end
-    vim.keymap.set('n', '-', function()
-      local bufnr = vim.api.nvim_get_current_buf()
-      local path = Path.new(vim.fn.getcwd())
-      local parent = path:parent().filename
-      vim.cmd('Explore ' .. parent)
-      -- local bufnr = vim.api.nvim_get_current_buf()
-      -- vim.api.nvim_buf_set_name(bufnr, parent)
-    end, netrwmapopts)
+    -- vim.keymap.set('n', '-', function()
+    --   local bufnr = vim.api.nvim_get_current_buf()
+    --   local path = Path.new(vim.fn.getcwd())
+    --   local parent = path:parent().filename
+    --   vim.cmd('Explore ' .. parent)
+    --   -- local bufnr = vim.api.nvim_get_current_buf()
+    --   -- vim.api.nvim_buf_set_name(bufnr, parent)
+    -- end, netrwmapopts)
   end
 })
 
@@ -140,6 +140,7 @@ vim.cmd [[
 
 -- easypick
 --
+
 vim.cmd [[
    nnoremap <leader>sd <cmd>cd %:p:h<cr><cmd>Easypick foldersbelow<cr>
    nnoremap <Leader>cf <cmd>Easypick changed_files<cr>
@@ -226,6 +227,12 @@ vim.api.nvim_set_keymap("n", "§p", "<cmd>tabl<cr>", mapopts)
 vim.api.nvim_set_keymap("n", "<c-t>o", "<cmd>tabonly<cr>", mapopts)
 vim.api.nvim_set_keymap("n", "§<space>", "g<tab>", mapopts)
 vim.api.nvim_set_keymap("n", "<space><space>", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "§§", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "§1", "1gt", mapopts)
+vim.api.nvim_set_keymap("n", "§2", "2gt", mapopts)
+vim.api.nvim_set_keymap("n", "§3", "3gt", mapopts)
+vim.api.nvim_set_keymap("n", "§4", "4gt", mapopts)
+vim.api.nvim_set_keymap("n", "§5", "5gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>1", "1gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>2", "2gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>3", "3gt", mapopts)
@@ -313,3 +320,7 @@ vim.keymap.set({ 'n' }, "<leader>x", "<cmd>OverseerRun<cr>", mapopts)
 
 -- SOURCE CONTROL
 vim.api.nvim_set_keymap("n", "<leader>ng", "<cmd>Neogit<cr>", mapopts);
+
+-- WIKI
+vim.api.nvim_set_keymap("n", "<leader>wp", "<Plug>(wiki-pages)", mapopts);
+

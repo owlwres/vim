@@ -159,6 +159,12 @@ return function()
     on_attach = on_attach,
     settings = {
       ['rust-analyzer'] = {
+        cargo = {
+          features = 'all'
+        },
+        rustfmt = {
+           overrideCommand = { "leptosfmt", "--stdin", "--rustfmt" }
+        },
         lens = {
           references = {
             trait = {

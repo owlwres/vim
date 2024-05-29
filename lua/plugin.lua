@@ -295,12 +295,12 @@ require('lazy').setup({
   'Hoffs/omnisharp-extended-lsp.nvim',
 
   -- LINTING
-  {
-    'mfussenegger/nvim-lint',
-    config = function()
-      require('user.lint')
-    end
-  },
+  -- {
+  --   'mfussenegger/nvim-lint',
+  --   config = function()
+  --     require('user.lint')
+  --   end
+  -- },
 
   -- TREESITTER
   {

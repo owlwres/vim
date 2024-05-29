@@ -4,8 +4,9 @@ function M:init(options)
   -- options.icon = options.icon or { "", color = { fg = "black" } }
   M.super.init(self, options)
 end
+
 local function get_session()
-  return require('possession.session').session_name or ''
+  return require('possession.session').get_session_name() or ''
 end
 function M:initial_status()
   return get_session()

@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd('filetype', {
     vim.keymap.set('n', '<C-n>', '<cmd>term<CR>i', netrwmapopts)
     vim.keymap.set('n', 'o', '<Plug>NetrwLocalBrowseCheck', netrwmapopts)
     vim.keymap.set('n', '~', '<cmd>NetrwKeepj call netrw#LocalBrowseCheck(expand("~/Work"))<cr>', netrwmapopts)
-    vim.keymap.set('n', '<leader>sd', '<cmd>Easypick foldersbelow<cr> ', netrwmapopts)
+    vim.keymap.set('n', '<leader>sd', '<cmd>Easypick foldersbelow<cr>', netrwmapopts)
     local s_mapping = vim.fn.maparg('s', 'n', nil, true)
     local S_mapping = vim.fn.maparg('S', 'n', nil, true)
     if s_mapping.buffer ~= 0 then
@@ -141,8 +141,9 @@ vim.cmd [[
 -- easypick
 --
 
+-- nnoremap <leader>sd <cmd>cd %:p:h<cr><cmd>Easypick foldersbelow<cr>
 vim.cmd [[
-   nnoremap <leader>sd <cmd>cd %:p:h<cr><cmd>Easypick foldersbelow<cr>
+   nnoremap <leader>sd <cmd>Easypick foldersbelow<cr>
    nnoremap <Leader>cf <cmd>Easypick changed_files<cr>
    nnoremap <Leader>cn <cmd>Easypick conflicts<cr>
 ]]

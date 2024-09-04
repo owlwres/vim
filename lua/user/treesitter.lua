@@ -4,7 +4,7 @@ require 'nvim-treesitter.configs'.setup
       --   -- A list of parser names, or "all"
       ensure_installed =
       {
-        "typescript", "haskell", "fennel", "lua", "python", "rust", "vim", "vimdoc", "regex", "bash", "c_sharp", "markdown", "markdown_inline"
+        "c", "haskell", "fennel", "lua", "python", "rust", "vim", "regex", "bash", "c_sharp", "markdown", "markdown_inline", "typescript"
       },
 
       --   -- Install parsers synchronously ()
@@ -12,16 +12,25 @@ require 'nvim-treesitter.configs'.setup
       textobjects = {
         enable = true
       },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "gnn",
+          node_incremental = "grn",
+          scope_incremental = "grc",
+          node_decremental = "grm",
+        },
+      },
       highlight = {
         enable = true,
-        disable = {
-          "markdown"
-        }
+        disable = function(lang, bufnr)
+          return vim.api.nvim_buf_get_option(bufnr, 'filetype') == 'pandoc'
+        end,
       },
       --   -- Automatically install missing parsers when entering buffer
-      -- auto_install = true,
+      auto_install = true,
 
-      --   -- List of parsers to ignore installing (for "all")
+      --   -- List of parsers to ignore installing ()
       -- ignore_install = { "javascript" },
 
       --   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)

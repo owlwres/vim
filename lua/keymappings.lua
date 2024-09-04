@@ -5,12 +5,18 @@ local Path = require('plenary.path')
 
 -- netrw integration
 
+-- what is this?
+
 vim.keymap.set('n', '-', function()
   local bufnr = vim.api.nvim_get_current_buf()
   if vim.api.nvim_buf_get_option(bufnr, 'filetype') ~= 'netrw' then
     vim.fn.execute('Explore')
   end
 end, mapopts)
+
+local function netrw_navigate()
+  vim.notify(vim.fn.getcwd())
+end
 
 local netrw_telescope_augroup = vim.api.nvim_create_augroup("netrw_telescope", { clear = true })
 vim.api.nvim_create_autocmd('filetype', {
@@ -23,8 +29,15 @@ vim.api.nvim_create_autocmd('filetype', {
         attach_mappings = function(prompt_bufnr, map)
           local actions = require 'telescope.actions'
           local action_set = require 'telescope.actions.set'
+          local action_state = require 'telescope.actions.state'
           actions.select_default:replace(function()
+            local selection = action_state.get_selected_entry()
             action_set.select(prompt_bufnr, 'default')
+            local path_cwd = Path:new(vim.fn.getcwd())
+            local path_cwd_plus_selection = path_cwd:joinpath(selection.text)
+            if (path_cwd_plus_selection:is_dir()) then
+              vim.cmd('!zoxide add ' .. path_cwd_plus_selection.filename)
+            end
             vim.fn.feedkeys('o')
           end)
           return true
@@ -45,7 +58,7 @@ vim.api.nvim_create_autocmd('filetype', {
     local netrwmapopts = { buffer = true }
     vim.keymap.set('n', '<C-n>', '<cmd>term<CR>i', netrwmapopts)
     vim.keymap.set('n', 'o', '<Plug>NetrwLocalBrowseCheck', netrwmapopts)
-    vim.keymap.set('n', '~', '<cmd>NetrwKeepj call netrw#LocalBrowseCheck(expand("~/Work"))<cr>', netrwmapopts)
+    vim.keymap.set('n', '~', '<cmd>NetrwKeepj call netrw#LocalBrowseCheck(expand("~/work"))<cr>', netrwmapopts)
     vim.keymap.set('n', '<leader>sd', '<cmd>Easypick foldersbelow<cr>', netrwmapopts)
     local s_mapping = vim.fn.maparg('s', 'n', nil, true)
     local S_mapping = vim.fn.maparg('S', 'n', nil, true)
@@ -188,7 +201,25 @@ vim.cmd [[
 --   { noremap = true }
 -- )
 
+local change_directory_to_project_root = function()
+  local cwd = vim.fn.getcwd()
+  vim.cmd.cd()
+  local cwdpath = Path:new(cwd)
+  local path_components = cwdpath:_split()
+  local tail_component
+  for index, value in ipairs(cwdpath:_split()) do
+    tail_component = value
+  end
+  if tail_component == 'src' then
+    vim.cmd.cd('..')
+  end
+end
+
 -- dap
+--
+-- local typescript_mapping_augroup = vim.api.nvim_create_augroup('typescript_mapping', { clear = true })
+-- vim.api.nvim_create_autocmd('filetype', )
+
 vim.cmd [[
     nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
     nnoremap <silent> <F8> <Cmd>lua require"dap.ui.widgets".hover()<CR>
@@ -196,11 +227,14 @@ vim.cmd [[
     nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
     nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
     nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
+    nnoremap <silent> <Leader>ds <Cmd>lua require'dap'.terminate()<CR>
     nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
     nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
     nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
     nnoremap <silent> <Leader>dl <Cmd>lua require'osv'.launch({port = 8086})<CR>
-    nnoremap <silent> <Leader>ds <Cmd>lua require'osv'.stop()<CR>
+    nnoremap <silent> <Leader>dS <Cmd>lua require'osv'.stop()<CR>
+    nnoremap <silent> <Leader>do <Cmd>lua require'dapui'.open()<CR>
+    nnoremap <silent> <Leader>dc <Cmd>lua require'dapui'.close()<CR>
 ]]
 
 -- diff
@@ -217,23 +251,23 @@ vim.cmd [[
 
 -- Tabs
 --
-vim.api.nvim_set_keymap("n", "§h", "<cmd>tabp<cr>", mapopts);
-vim.api.nvim_set_keymap("n", "§l", "<cmd>tabn<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "§k", "<cmd>tabcl<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "§n", "<cmd>tabnew<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "§H", "<cmd>tabmove -1<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "§L", "<cmd>tabmove +1<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "§i", "<cmd>tabfir<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "§p", "<cmd>tabl<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "`h", "<cmd>tabp<cr>", mapopts);
+vim.api.nvim_set_keymap("n", "`l", "<cmd>tabn<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "`k", "<cmd>tabcl<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "`n", "<cmd>tabnew<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "`H", "<cmd>tabmove -1<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "`L", "<cmd>tabmove +1<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "`i", "<cmd>tabfir<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "`p", "<cmd>tabl<cr>", mapopts)
 vim.api.nvim_set_keymap("n", "<c-t>o", "<cmd>tabonly<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "§<space>", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "`<space>", "g<tab>", mapopts)
 vim.api.nvim_set_keymap("n", "<space><space>", "g<tab>", mapopts)
-vim.api.nvim_set_keymap("n", "§§", "g<tab>", mapopts)
-vim.api.nvim_set_keymap("n", "§1", "1gt", mapopts)
-vim.api.nvim_set_keymap("n", "§2", "2gt", mapopts)
-vim.api.nvim_set_keymap("n", "§3", "3gt", mapopts)
-vim.api.nvim_set_keymap("n", "§4", "4gt", mapopts)
-vim.api.nvim_set_keymap("n", "§5", "5gt", mapopts)
+vim.api.nvim_set_keymap("n", "``", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "`1", "1gt", mapopts)
+vim.api.nvim_set_keymap("n", "`2", "2gt", mapopts)
+vim.api.nvim_set_keymap("n", "`3", "3gt", mapopts)
+vim.api.nvim_set_keymap("n", "`4", "4gt", mapopts)
+vim.api.nvim_set_keymap("n", "`5", "5gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>1", "1gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>2", "2gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>3", "3gt", mapopts)
@@ -245,17 +279,17 @@ vim.api.nvim_set_keymap("n", "<space>8", "8gt", mapopts)
 
 -- Windows
 --
-vim.api.nvim_set_keymap("n", "§wj", "<c-w>j", mapopts)
-vim.api.nvim_set_keymap("n", "§wk", "<c-w>k", mapopts)
+vim.api.nvim_set_keymap("n", "`wj", "<c-w>j", mapopts)
+vim.api.nvim_set_keymap("n", "`wk", "<c-w>k", mapopts)
 vim.api.nvim_set_keymap("n", "<c-w>d", "<c-w>c", mapopts)
-vim.api.nvim_set_keymap("n", "§wh", "<c-w>h", mapopts)
-vim.api.nvim_set_keymap("n", "§wl", "<c-w>l", mapopts)
-vim.api.nvim_set_keymap("n", "§wu", "<c-w>s", mapopts)
-vim.api.nvim_set_keymap("n", "§wi", "<c-w>v", mapopts)
-vim.api.nvim_set_keymap("n", "§wo", "<c-w>o", mapopts)
-vim.api.nvim_set_keymap("n", "§wy", "<c-w>30>", mapopts)
-vim.api.nvim_set_keymap("n", "§wp", "<c-w>30+", mapopts)
-vim.api.nvim_set_keymap("t", "§wn", "<C-\\><C-N>", mapopts)
+vim.api.nvim_set_keymap("n", "`wh", "<c-w>h", mapopts)
+vim.api.nvim_set_keymap("n", "`wl", "<c-w>l", mapopts)
+vim.api.nvim_set_keymap("n", "`wu", "<c-w>s", mapopts)
+vim.api.nvim_set_keymap("n", "`wi", "<c-w>v", mapopts)
+vim.api.nvim_set_keymap("n", "`wo", "<c-w>o", mapopts)
+vim.api.nvim_set_keymap("n", "`wy", "<c-w>30>", mapopts)
+vim.api.nvim_set_keymap("n", "`wp", "<c-w>30+", mapopts)
+vim.api.nvim_set_keymap("t", "`wn", "<C-\\><C-N>", mapopts)
 vim.api.nvim_set_keymap("t", "<c-o>", "<C-\\><C-N>", mapopts)
 
 -- Macro
@@ -264,7 +298,7 @@ vim.keymap.set('v', 'Q', ':norm Q<cr>', mapopts)
 
 -- LUA DEVELOPMENT
 --
-vim.keymap.set({ 'n', 'v' }, '§<leader>', function()
+vim.keymap.set({ 'n', 'v' }, '`<leader>', function()
   -- print(vim.inspect(require('scratch')))
   require('scratch'):open()
 end
@@ -280,10 +314,10 @@ vim.keymap.set({ 'n', 'v' }, '<space>ji', function() require('notify').dismiss()
 -- REGISTERS
 
 vim.cmd [[
-  nnoremap <C-j> "*y
-  vnoremap <C-j> "*y
-  nnoremap <C-p> "*p
-  vnoremap <C-p> "*p
+  nnoremap <C-j> "+y
+  vnoremap <C-j> "+y
+  nnoremap <C-p> "+p
+  vnoremap <C-p> "+p
 ]]
 
 -- TERMINAL MODE
@@ -300,16 +334,16 @@ vim.api.nvim_create_autocmd({ "TermEnter" }, {
 --- TABS
 ---
 
-vim.api.nvim_set_keymap("t", "§h", "<C-\\><C-N><cmd>tabp<cr>", mapopts);
-vim.api.nvim_set_keymap("t", "§l", "<C-\\><C-N><cmd>tabn<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "§k", "<C-\\><C-N><cmd>tabcl<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "§n", "<C-\\><C-N><cmd>tabnew<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "§H", "<C-\\><C-N><cmd>tabmove -1<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "§L", "<C-\\><C-N><cmd>tabmove +1<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "§i", "<C-\\><C-N><cmd>tabfir<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "§p", "<C-\\><C-N><cmd>tabl<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "`h", "<C-\\><C-N><cmd>tabp<cr>", mapopts);
+vim.api.nvim_set_keymap("t", "`l", "<C-\\><C-N><cmd>tabn<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "`k", "<C-\\><C-N><cmd>tabcl<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "`n", "<C-\\><C-N><cmd>tabnew<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "`H", "<C-\\><C-N><cmd>tabmove -1<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "`L", "<C-\\><C-N><cmd>tabmove +1<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "`i", "<C-\\><C-N><cmd>tabfir<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "`p", "<C-\\><C-N><cmd>tabl<cr>", mapopts)
 vim.api.nvim_set_keymap("t", "<c-t>o", "<C-\\><C-N><cmd>tabonly<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "§<space>", "<C-\\><C-N>g<tab>", mapopts)
+vim.api.nvim_set_keymap("t", "`<space>", "<C-\\><C-N>g<tab>", mapopts)
 
 -- OVERSEER
 --
@@ -324,4 +358,3 @@ vim.api.nvim_set_keymap("n", "<leader>ng", "<cmd>Neogit<cr>", mapopts);
 
 -- WIKI
 vim.api.nvim_set_keymap("n", "<leader>wp", "<Plug>(wiki-pages)", mapopts);
-

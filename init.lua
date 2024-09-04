@@ -21,6 +21,7 @@ set cursorline
 set virtualedit=all
 set shada=!,'1000,<50,s10,h
 set splitkeep=screen
+set laststatus=3
 
 inoremap jk <ESC>
 nnoremap <C-q> :qa!<CR>

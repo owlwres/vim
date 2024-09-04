@@ -200,7 +200,7 @@ Plug 'wellle/targets.vim'
 Plug 'kkharji/sqlite.lua'
 
 " SQL
-Plug 'mzarnitsa/psql'
+" Plug 'mzarnitsa/psql'
 
 " TELESCOPE
 Plug 'nvim-lua/popup.nvim'

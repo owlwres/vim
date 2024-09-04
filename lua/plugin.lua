@@ -34,9 +34,18 @@ require('lazy').setup({
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd('colorscheme github_dark_dimmed')
+      vim.cmd('colorscheme github_dark')
     end
   },
+  -- {
+  --   'lifepillar/vim-solarized8',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd('set background=dark')
+  --     vim.cmd('colorscheme solarized8')
+  --   end
+  -- },
 
   -- ERGONOMICS
   -- 'fedepujol/move.nvim',
@@ -85,7 +94,7 @@ require('lazy').setup({
     'windwp/nvim-autopairs',
     config = function()
       require 'user.autopairs'
-    end
+    end,
   },
   {
     "kylechui/nvim-surround",
@@ -95,7 +104,7 @@ require('lazy').setup({
       require("nvim-surround").setup({
         -- Configuration here, or leave empty to use defaults
       })
-    end
+    end,
   },
   -- {
   --   'gaoDean/autolist.nvim',
@@ -130,7 +139,7 @@ require('lazy').setup({
           { "fancy_mode", width = 3 }
         },
         lualine_b = {
-          { "session" },
+          -- { "session" },
           { "fancy_branch" },
           { "fancy_diff" },
         },
@@ -165,6 +174,7 @@ require('lazy').setup({
   'tpope/vim-dadbod',
   'tpope/vim-repeat',
 
+
   -- FILESYSTEM
   -- 'stevearc/oil.nvim',
 
@@ -187,6 +197,16 @@ require('lazy').setup({
       require 'user.gitsigns'
     end
   },
+  -- {
+  --   'pwntester/octo.nvim',
+  --   config = true,
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-telescope/telescope.nvim',
+  --     -- OR 'ibhagwan/fzf-lua',
+  --     'nvim-tree/nvim-web-devicons',
+  --   }
+  -- },
 
   -- TASK MANAGEMENT
   {
@@ -245,6 +265,37 @@ require('lazy').setup({
 
 
   -- DEVELOPMENT
+  --
+  'github/copilot.vim',
+  {
+    'yetone/avante.nvim',
+    event = "VeryLazy",
+    build = "make BUILD_FROM_SOURCE=true luajit",
+    opts = {
+      -- add any opts here
+    },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below is optional, make sure to setup it properly if you have lazy=true
+      -- {
+      --   'MeanderingProgrammer/render-markdown.nvim',
+      --   opts = {
+      --     file_types = {  "Avante" },
+      --   },
+      --   ft = {  "Avante" },
+      -- },
+    },
+  },
+  -- {
+  --   "MeanderingProgrammer/render-markdown.nvim",
+  --   opts = {
+  --     file_types = {  "Avante" },
+  --   },
+  --   ft = {  "Avante" },
+  -- },
   -- 'bfredl/nvim-luadev',
 
   -- LSP
@@ -262,18 +313,24 @@ require('lazy').setup({
   --   },
   -- },
 
-  -- {
-  --   'stevearc/aerial.nvim',
-  --   config = function()
-  --     require 'user.aerial'
-  --   end,
-  --   opts = {},
-  --   -- Optional dependencies
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "nvim-tree/nvim-web-devicons"
-  --   },
-  -- },
+  {
+    'stevearc/aerial.nvim',
+    config = function()
+      require 'user.aerial'
+    end,
+    opts = {},
+    -- Optional dependencies
+    dependencies = {
+      {
+        'nvim-treesitter/nvim-treesitter',
+        -- pin = true,
+        config = function()
+          require 'user.treesitter'
+        end,
+      },
+      "nvim-tree/nvim-web-devicons"
+    },
+  },
   {
     'neovim/nvim-lspconfig',
     config = function()
@@ -305,7 +362,6 @@ require('lazy').setup({
   -- TREESITTER
   {
     'nvim-treesitter/nvim-treesitter',
-    tag = "v0.9.2",
     -- pin = true,
     config = function()
       require 'user.treesitter'
@@ -493,7 +549,7 @@ require('lazy').setup({
           require 'user.leap'
         end
       },
-    }
+    },
   },
 
   {
@@ -509,7 +565,7 @@ require('lazy').setup({
           require 'user.leap'
         end
       },
-    }
+    },
   },
 
 
@@ -523,12 +579,12 @@ require('lazy').setup({
   'kkharji/sqlite.lua',
 
   -- SQL
-  {
-    'mzarnitsa/psql',
-    config = function()
-      require 'user.psql'
-    end
-  },
+  -- {
+  --   'mzarnitsa/psql',
+  --   config = function()
+  --     require 'user.psql'
+  --   end
+  -- },
 
   -- TASK: marks
   -- TELESCOPE

@@ -1,6 +1,7 @@
 if vim.g.vscode then
   return
 end
+
 -- leadghr
 local keymap = vim.api.nvim_set_keymap
 local mapopts = { noremap = true, silent = true }
@@ -254,23 +255,23 @@ vim.cmd [[
 
 -- Tabs
 --
-vim.api.nvim_set_keymap("n", "`h", "<cmd>tabp<cr>", mapopts);
-vim.api.nvim_set_keymap("n", "`l", "<cmd>tabn<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "`k", "<cmd>tabcl<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "`n", "<cmd>tabnew<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "`H", "<cmd>tabmove -1<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "`L", "<cmd>tabmove +1<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "`i", "<cmd>tabfir<cr>", mapopts)
-vim.api.nvim_set_keymap("n", "`p", "<cmd>tabl<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§h", "<cmd>tabp<cr>", mapopts);
+vim.api.nvim_set_keymap("n", "§l", "<cmd>tabn<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§k", "<cmd>tabcl<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§n", "<cmd>tabnew<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§H", "<cmd>tabmove -1<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§L", "<cmd>tabmove +1<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§i", "<cmd>tabfir<cr>", mapopts)
+vim.api.nvim_set_keymap("n", "§p", "<cmd>tabl<cr>", mapopts)
 vim.api.nvim_set_keymap("n", "<c-t>o", "<cmd>tabonly<cr>", mapopts)
 vim.api.nvim_set_keymap("n", "`<space>", "g<tab>", mapopts)
 vim.api.nvim_set_keymap("n", "<space><space>", "g<tab>", mapopts)
-vim.api.nvim_set_keymap("n", "``", "g<tab>", mapopts)
-vim.api.nvim_set_keymap("n", "`1", "1gt", mapopts)
-vim.api.nvim_set_keymap("n", "`2", "2gt", mapopts)
-vim.api.nvim_set_keymap("n", "`3", "3gt", mapopts)
-vim.api.nvim_set_keymap("n", "`4", "4gt", mapopts)
-vim.api.nvim_set_keymap("n", "`5", "5gt", mapopts)
+vim.api.nvim_set_keymap("n", "§§", "g<tab>", mapopts)
+vim.api.nvim_set_keymap("n", "§1", "1gt", mapopts)
+vim.api.nvim_set_keymap("n", "§2", "2gt", mapopts)
+vim.api.nvim_set_keymap("n", "§3", "3gt", mapopts)
+vim.api.nvim_set_keymap("n", "§4", "4gt", mapopts)
+vim.api.nvim_set_keymap("n", "§5", "5gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>1", "1gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>2", "2gt", mapopts)
 vim.api.nvim_set_keymap("n", "<space>3", "3gt", mapopts)
@@ -282,17 +283,17 @@ vim.api.nvim_set_keymap("n", "<space>8", "8gt", mapopts)
 
 -- Windows
 --
-vim.api.nvim_set_keymap("n", "`wj", "<c-w>j", mapopts)
-vim.api.nvim_set_keymap("n", "`wk", "<c-w>k", mapopts)
+vim.api.nvim_set_keymap("n", "§wj", "<c-w>j", mapopts)
+vim.api.nvim_set_keymap("n", "§wk", "<c-w>k", mapopts)
 vim.api.nvim_set_keymap("n", "<c-w>d", "<c-w>c", mapopts)
-vim.api.nvim_set_keymap("n", "`wh", "<c-w>h", mapopts)
-vim.api.nvim_set_keymap("n", "`wl", "<c-w>l", mapopts)
-vim.api.nvim_set_keymap("n", "`wu", "<c-w>s", mapopts)
-vim.api.nvim_set_keymap("n", "`wi", "<c-w>v", mapopts)
-vim.api.nvim_set_keymap("n", "`wo", "<c-w>o", mapopts)
-vim.api.nvim_set_keymap("n", "`wy", "<c-w>30>", mapopts)
-vim.api.nvim_set_keymap("n", "`wp", "<c-w>30+", mapopts)
-vim.api.nvim_set_keymap("t", "`wn", "<C-\\><C-N>", mapopts)
+vim.api.nvim_set_keymap("n", "§wh", "<c-w>h", mapopts)
+vim.api.nvim_set_keymap("n", "§wl", "<c-w>l", mapopts)
+vim.api.nvim_set_keymap("n", "§wu", "<c-w>s", mapopts)
+vim.api.nvim_set_keymap("n", "§wi", "<c-w>v", mapopts)
+vim.api.nvim_set_keymap("n", "§wo", "<c-w>o", mapopts)
+vim.api.nvim_set_keymap("n", "§wy", "<c-w>30>", mapopts)
+vim.api.nvim_set_keymap("n", "§wp", "<c-w>30+", mapopts)
+vim.api.nvim_set_keymap("t", "§wn", "<C-\\><C-N>", mapopts)
 vim.api.nvim_set_keymap("t", "<c-o>", "<C-\\><C-N>", mapopts)
 
 -- Macro
@@ -337,16 +338,16 @@ vim.api.nvim_create_autocmd({ "TermEnter" }, {
 --- TABS
 ---
 
-vim.api.nvim_set_keymap("t", "`h", "<C-\\><C-N><cmd>tabp<cr>", mapopts);
-vim.api.nvim_set_keymap("t", "`l", "<C-\\><C-N><cmd>tabn<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "`k", "<C-\\><C-N><cmd>tabcl<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "`n", "<C-\\><C-N><cmd>tabnew<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "`H", "<C-\\><C-N><cmd>tabmove -1<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "`L", "<C-\\><C-N><cmd>tabmove +1<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "`i", "<C-\\><C-N><cmd>tabfir<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "`p", "<C-\\><C-N><cmd>tabl<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "§h", "<C-\\><C-N><cmd>tabp<cr>", mapopts);
+vim.api.nvim_set_keymap("t", "§l", "<C-\\><C-N><cmd>tabn<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "§k", "<C-\\><C-N><cmd>tabcl<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "§n", "<C-\\><C-N><cmd>tabnew<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "§H", "<C-\\><C-N><cmd>tabmove -1<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "§L", "<C-\\><C-N><cmd>tabmove +1<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "§i", "<C-\\><C-N><cmd>tabfir<cr>", mapopts)
+vim.api.nvim_set_keymap("t", "§p", "<C-\\><C-N><cmd>tabl<cr>", mapopts)
 vim.api.nvim_set_keymap("t", "<c-t>o", "<C-\\><C-N><cmd>tabonly<cr>", mapopts)
-vim.api.nvim_set_keymap("t", "`<space>", "<C-\\><C-N>g<tab>", mapopts)
+vim.api.nvim_set_keymap("t", "§<space>", "<C-\\><C-N>g<tab>", mapopts)
 
 -- OVERSEER
 --

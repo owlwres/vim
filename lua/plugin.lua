@@ -33,6 +33,7 @@ require('lazy').setup({
     'projekt0n/github-nvim-theme',
     lazy = false,
     priority = 1000,
+    cond = not vim.g.vscode,
     config = function()
       vim.cmd('colorscheme github_dark')
     end
@@ -66,12 +67,14 @@ require('lazy').setup({
   -- },
   {
     'prichrd/netrw.nvim',
+    cond = not vim.g.vscode,
     config = function()
       require('user.netrw')
     end
   },
   {
     "folke/which-key.nvim",
+    cond = not vim.g.vscode,
     event = "VeryLazy",
     init = function()
       vim.o.timeout = true
@@ -85,6 +88,7 @@ require('lazy').setup({
   },
   {
     'nvim-focus/focus.nvim',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.focus'
     end,
@@ -100,11 +104,7 @@ require('lazy').setup({
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end,
+    config = true,
   },
   -- {
   --   'gaoDean/autolist.nvim',
@@ -120,6 +120,7 @@ require('lazy').setup({
   -- },
   {
     "nvim-lualine/lualine.nvim",
+    cond = not vim.g.vscode,
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "meuter/lualine-so-fancy.nvim",
@@ -181,6 +182,7 @@ require('lazy').setup({
   -- SOURCE CONTROL
   {
     "NeogitOrg/neogit",
+    cond = not vim.g.vscode,
     dependencies = {
       "nvim-lua/plenary.nvim",         -- required
       "sindrets/diffview.nvim",        -- optional - Diff integration
@@ -193,6 +195,7 @@ require('lazy').setup({
   },
   {
     'lewis6991/gitsigns.nvim',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.gitsigns'
     end
@@ -211,6 +214,7 @@ require('lazy').setup({
   -- TASK MANAGEMENT
   {
     'stevearc/overseer.nvim',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.overseer'
     end,
@@ -242,6 +246,7 @@ require('lazy').setup({
   -- TABS
   {
     'LukasPietzschmann/telescope-tabs',
+    cond = not vim.g.vscode,
     config = function()
       require('telescope').load_extension 'telescope-tabs'
       require('telescope-tabs').setup {
@@ -252,6 +257,7 @@ require('lazy').setup({
   },
   {
     'nanozuki/tabby.nvim',
+    cond = not vim.g.vscode,
     event = 'VimEnter',
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
@@ -260,15 +266,25 @@ require('lazy').setup({
   },
 
   -- PANDOC
-  'vim-pandoc/vim-pandoc',
-  'vim-pandoc/vim-pandoc-syntax',
+  {
+    'vim-pandoc/vim-pandoc',
+    cond = not vim.g.vscode,
+  },
+  {
+    'vim-pandoc/vim-pandoc-syntax',
+    cond = not vim.g.vscode,
+  },
 
 
   -- DEVELOPMENT
   --
-  'github/copilot.vim',
+  {
+    'github/copilot.vim',
+    cond = not vim.g.vscode,
+  },
   {
     'yetone/avante.nvim',
+    cond = not vim.g.vscode,
     event = "VeryLazy",
     build = "make BUILD_FROM_SOURCE=true luajit",
     opts = {
@@ -315,6 +331,7 @@ require('lazy').setup({
 
   {
     'stevearc/aerial.nvim',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.aerial'
     end,
@@ -333,6 +350,7 @@ require('lazy').setup({
   },
   {
     'neovim/nvim-lspconfig',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.lsp' ()
     end,
@@ -362,6 +380,7 @@ require('lazy').setup({
   -- TREESITTER
   {
     'nvim-treesitter/nvim-treesitter',
+    cond = not vim.g.vscode,
     -- pin = true,
     config = function()
       require 'user.treesitter'
@@ -370,6 +389,7 @@ require('lazy').setup({
 
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.treesitter-textobjects'
     end,
@@ -384,6 +404,7 @@ require('lazy').setup({
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
+    cond = not vim.g.vscode,
     lazy = false,
     config = function()
       require 'user.treesitter-context'
@@ -403,6 +424,7 @@ require('lazy').setup({
   -- ORG MODE
   {
     'nvim-orgmode/orgmode',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.orgmode'
     end
@@ -428,6 +450,7 @@ require('lazy').setup({
   -- },
   {
     "hrsh7th/nvim-cmp",
+    cond = not vim.g.vscode,
     config = function()
       require 'user.cmp'
     end,
@@ -467,6 +490,7 @@ require('lazy').setup({
   -- Plug 'puremourning/vimspector'
   {
     'rcarriga/nvim-dap-ui',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.dap-ui'
     end,
@@ -482,6 +506,7 @@ require('lazy').setup({
   },
   {
     'jbyuki/one-small-step-for-vimkind',
+    cond = not vim.g.vscode,
     lazy = true
   },
 
@@ -489,6 +514,7 @@ require('lazy').setup({
   -- 'ecthelionvi/NeoComposer.nvim',
   {
     "chrisgrieser/nvim-recorder",
+    cond = not vim.g.vscode,
     config = function()
       require 'user.recorder'
     end
@@ -499,6 +525,7 @@ require('lazy').setup({
 
   {
     'L3MON4D3/LuaSnip',
+    cond = not vim.g.vscode,
     version = 'v2.*',
     build = 'make install_jsregexp',
     dependencies = { "rafamadriz/friendly-snippets" },
@@ -520,6 +547,7 @@ require('lazy').setup({
   -- WIKI
   {
     'lervag/wiki.vim',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.wiki'
     end,
@@ -576,7 +604,10 @@ require('lazy').setup({
   'wellle/targets.vim',
 
   -- SQLITE
-  'kkharji/sqlite.lua',
+  {
+    'kkharji/sqlite.lua',
+    cond = not vim.g.vscode,
+  },
 
   -- SQL
   -- {
@@ -590,6 +621,7 @@ require('lazy').setup({
   -- TELESCOPE
   {
     'nvim-telescope/telescope.nvim',
+    cond = not vim.g.vscode,
     lazy = false,
     config = function()
       require('user.telescope')
@@ -617,6 +649,7 @@ require('lazy').setup({
   -- 'rmagatti/auto-session',
   {
     'jedrzejboczar/possession.nvim',
+    cond = not vim.g.vscode,
     config = function()
       require 'user.possession'
     end,
@@ -635,6 +668,7 @@ require('lazy').setup({
   -- },
   {
     'folke/noice.nvim',
+    cond = not vim.g.vscode,
     event = "VeryLazy",
     config = function() require 'user.noice' end,
     dependencies = {
@@ -654,4 +688,6 @@ require('lazy').setup({
   'fmoralesc/vim-extended-autochdir',
 })
 
-require('scratch'):setup()
+if not vim.g.vscode then
+  require('scratch'):setup()
+end

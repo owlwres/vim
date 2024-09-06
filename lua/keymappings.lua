@@ -1,3 +1,6 @@
+if vim.g.vscode then
+  return
+end
 -- leadghr
 local keymap = vim.api.nvim_set_keymap
 local mapopts = { noremap = true, silent = true }

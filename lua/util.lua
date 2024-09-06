@@ -1,3 +1,6 @@
+if vim.g.vscode then
+  return
+end
 local path = require('plenary.path')
 -- yank file contents to clipboard
 

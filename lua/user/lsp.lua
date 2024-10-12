@@ -116,6 +116,7 @@ return function()
     capabilities = capabilities,
     on_attach = on_attach,
     flags = lsp_flags,
+    cmd = { '/home/linuxbrew/.linuxbrew/bin/typescript-language-server', '--stdio'}
   }
   require 'lspconfig'.jsonls.setup {
     capabilities = capabilities,

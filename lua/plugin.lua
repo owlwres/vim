@@ -282,29 +282,29 @@ require('lazy').setup({
     'github/copilot.vim',
     cond = not vim.g.vscode,
   },
-  {
-    'yetone/avante.nvim',
-    cond = not vim.g.vscode,
-    event = "VeryLazy",
-    build = "make BUILD_FROM_SOURCE=true luajit",
-    opts = {
-      -- add any opts here
-    },
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below is optional, make sure to setup it properly if you have lazy=true
-      -- {
-      --   'MeanderingProgrammer/render-markdown.nvim',
-      --   opts = {
-      --     file_types = {  "Avante" },
-      --   },
-      --   ft = {  "Avante" },
-      -- },
-    },
-  },
+  -- {
+  --   'yetone/avante.nvim',
+  --   cond = not vim.g.vscode,
+  --   event = "VeryLazy",
+  --   build = "make BUILD_FROM_SOURCE=true luajit",
+  --   opts = {
+  --     -- add any opts here
+  --   },
+  --   dependencies = {
+  --     "nvim-tree/nvim-web-devicons",
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     --- The below is optional, make sure to setup it properly if you have lazy=true
+  --     -- {
+  --     --   'MeanderingProgrammer/render-markdown.nvim',
+  --     --   opts = {
+  --     --     file_types = {  "Avante" },
+  --     --   },
+  --     --   ft = {  "Avante" },
+  --     -- },
+  --   },
+  -- },
   -- {
   --   "MeanderingProgrammer/render-markdown.nvim",
   --   opts = {
@@ -669,8 +669,8 @@ require('lazy').setup({
   {
     'folke/noice.nvim',
     cond = not vim.g.vscode,
-    event = "VeryLazy",
-    config = function() require 'user.noice' end,
+    -- event = "VeryLazy",
+    config = true,
     dependencies = {
       'MunifTanjim/nui.nvim',
       {
